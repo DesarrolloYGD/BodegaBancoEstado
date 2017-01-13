@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="840e9056384e4ba1ace85ff091779d4c" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="pruebatotalNewModel.BODEGA" Width="1.5" PointX="7.5" PointY="5.375" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.CATEGORIA" Width="1.5" PointX="7.5" PointY="8.875" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.CIUDAD" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.CLIENTE" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.COMUNA" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.PRODUCTO" Width="1.5" PointX="9.75" PointY="1.125" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.PRODUCTOBODEGA" Width="1.5" PointX="12" PointY="3.375" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.REGION" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__BODEGA__IDComuna__4E88ABD4" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_PRODUCTOBODEGA_BODEGA" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__CATEGORIA__IdCat__31EC6D26" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__PRODUCTO__IDCate__3E52440B" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__CIUDAD__IdRegion__38996AB5" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__COMUNA__IdCiudad__3B75D760" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__CLIENTE__IDComun__5CD6CB2B" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__PRODUCTO__IDClie__5DCAEF64" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_PRODUCTOBODEGA_PRODUCTO" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Area" Width="1.5" PointX="10.375" PointY="15.5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.SolicitudPedido" Width="1.5" PointX="12.625" PointY="8.125" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TipoDespacho" Width="1.5" PointX="10.375" PointY="10.5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TipoEmpaque" Width="1.5" PointX="10.375" PointY="20.375" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TipoEncomienda" Width="1.5" PointX="10.375" PointY="13.125" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TipoPedido" Width="1.5" PointX="10.375" PointY="7.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TrasladoDespacho" Width="1.5" PointX="10.375" PointY="18" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_Area" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_TipoDespacho1" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_TipoEmpaque" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_TipoEncomienda" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_TipoPedido" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_SolicitudPedido_TrasladoDespacho" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.ProductoSolicitud" Width="1.5" PointX="14.875" PointY="10.375" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_ProductoSolicitud_SolicitudPedido" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__ProductoS__Nombr__37C5420D" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Cargo" Width="1.5" PointX="0.75" PointY="12.625" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Categorias" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Distribucion" Width="1.5" PointX="5.75" PointY="12.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Productos" Width="1.5" PointX="14.75" PointY="1.125" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Solicitud" Width="1.5" PointX="16" PointY="13.875" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Solicitudes" Width="1.5" PointX="7.75" PointY="12.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Stock" Width="1.5" PointX="17" PointY="1" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Usuario" Width="1.5" PointX="3" PointY="12" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_Area" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Cargo" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Stock_Productos" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_TipoDespacho" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_TipoEmpaque" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_TipoEncomienda" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_TipoPedido" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_Solicitud_TrasladoDespacho" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.database_firewall_rules" Width="1.5" PointX="14.375" PointY="4.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.AspNetRoles" Width="1.5" PointX="17.75" PointY="6.5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.AspNetUserClaims" Width="1.5" PointX="22.25" PointY="7.625" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.AspNetUserLogins" Width="1.5" PointX="22.25" PointY="5" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.AspNetUsers" Width="1.5" PointX="20" PointY="5.375" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="pruebatotalNewModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="pruebatotalNewModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Mecanizado" Width="1.5" PointX="0.75" PointY="6.875" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__Solicitud__idMec__789EE131" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
