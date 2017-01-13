@@ -58,6 +58,8 @@
     <EntitySetMapping Name="PRODUCTO">
       <EntityTypeMapping TypeName="pruebatotalNewModel.PRODUCTO">
         <MappingFragment StoreEntitySet="PRODUCTO">
+          <ScalarProperty Name="UsuarioUltimaEdicion" ColumnName="UsuarioUltimaEdicion" />
+          <ScalarProperty Name="FechaUltimaEdicion" ColumnName="FechaUltimaEdicion" />
           <ScalarProperty Name="stock_ideal" ColumnName="stock_ideal" />
           <ScalarProperty Name="CantidadTotal" ColumnName="CantidadTotal" />
           <ScalarProperty Name="imagenProducto" ColumnName="imagenProducto" />

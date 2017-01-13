@@ -241,6 +241,8 @@
     <Property Name="CantidadTotal" Type="Int32" />
     <NavigationProperty Name="ProductoSolicitud" Relationship="pruebatotalNewModel.FK__ProductoS__Nombr__37C5420D" FromRole="PRODUCTO" ToRole="ProductoSolicitud" />
     <Property Name="stock_ideal" Type="Int32" />
+    <Property Name="FechaUltimaEdicion" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioUltimaEdicion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="PRODUCTOBODEGA">
     <Key>

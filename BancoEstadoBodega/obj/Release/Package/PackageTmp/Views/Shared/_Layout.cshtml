@@ -41,12 +41,15 @@
                     <li><img src="~/img/logobancoestado.png" class="img-responsive" /></li>
                     <li><br /></li>
                 </ul>
-                <ul class="nav nav-sidebar">
-                    <li @*class="active"*@><a href="../../Administracion/Producto">Productos <span class="sr-only">(current)</span></a></li>
-                    <li><a href="../../Solicitud/SolicitudPedido">Solicitudes</a></li>
-                    <li><a href="../../Reporte/Index">Reportes</a></li>
-                    @*<li><a href="../../Administracion">Administracion</a></li>*@
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav nav-sidebar">
+                        <li @*class="active"*@><a href="../../Administracion/Producto">Productos <span class="sr-only">(current)</span></a></li>
+                        <li><a href="../../Solicitud/SolicitudPedido">Solicitudes</a></li>
+                        <li><a href="../../Reporte/Index">Reportes</a></li>
+                        @*<li><a href="../../Administracion">Administracion</a></li>*@
+                    </ul>
+                }
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

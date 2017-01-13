@@ -179,6 +179,8 @@
           <Property Name="SueltasQL" Type="int" />
           <Property Name="SueltasDÑ" Type="int" />
           <Property Name="stock_ideal" Type="int" />
+          <Property Name="FechaUltimaEdicion" Type="datetime" />
+          <Property Name="UsuarioUltimaEdicion" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PRODUCTOBODEGA">
           <Key>
@@ -1158,6 +1160,8 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
           <Property Name="CantidadTotal" Type="Int32" />
           <NavigationProperty Name="ProductoSolicitud" Relationship="pruebatotalNewModel.FK__ProductoS__Nombr__37C5420D" FromRole="PRODUCTO" ToRole="ProductoSolicitud" />
           <Property Name="stock_ideal" Type="Int32" />
+          <Property Name="FechaUltimaEdicion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioUltimaEdicion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PRODUCTOBODEGA">
           <Key>
@@ -1945,6 +1949,8 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
           <EntitySetMapping Name="PRODUCTO">
             <EntityTypeMapping TypeName="pruebatotalNewModel.PRODUCTO">
               <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="UsuarioUltimaEdicion" ColumnName="UsuarioUltimaEdicion" />
+                <ScalarProperty Name="FechaUltimaEdicion" ColumnName="FechaUltimaEdicion" />
                 <ScalarProperty Name="stock_ideal" ColumnName="stock_ideal" />
                 <ScalarProperty Name="CantidadTotal" ColumnName="CantidadTotal" />
                 <ScalarProperty Name="imagenProducto" ColumnName="imagenProducto" />

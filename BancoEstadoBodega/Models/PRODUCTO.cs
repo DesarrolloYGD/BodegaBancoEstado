@@ -41,6 +41,8 @@ namespace BancoEstadoBodega.Models
         public byte[] imagenProducto { get; set; }
         public Nullable<int> CantidadTotal { get; set; }
         public Nullable<int> stock_ideal { get; set; }
+        public Nullable<System.DateTime> FechaUltimaEdicion { get; set; }
+        public string UsuarioUltimaEdicion { get; set; }
     
         public virtual CATEGORIA CATEGORIA { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
