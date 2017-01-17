@@ -38,9 +38,9 @@ namespace BancoEstadoBodega.Controllers
             String constring = ConfigurationManager.ConnectionStrings["Hola"].ConnectionString;
             SqlConnection con = new SqlConnection(constring);
 
-            string query = "select codigo, Nombre, Cliente.Alias, cantidadTotal from cliente inner join Producto on Producto.IDClienteFK = Cliente.IDCliente "+condicion;
+            string query = "select x.codigo, x.nombre, cl.alias, ca.nombre as Categoria, x.cantidadtotal from producto x join cliente cl on x.idclientefk = cl.idcliente join categoria ca on x.idcategoriafk = ca.idcategoria " + condicion;
             DataTable dt = new DataTable();
-            dt.TableName = "PRODUCTO";
+            dt.TableName = "PRODUCTO"; 
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(query, con);
             da.Fill(dt);

@@ -117,7 +117,7 @@ namespace BancoEstadoBodega.Controllers
         {
             int codigo = EnRol();
 
-            ViewBag.IDEmpresa = new SelectList(db.CLIENTE.ToList(), "IDCliente", "Alias", IDEmpresa);
+            ViewBag.IDEmpresa = new SelectList(db.CLIENTE.OrderBy(p => p.Alias).ToList(), "IDCliente", "Alias", IDEmpresa);
             ViewBag.IDCategoria = new SelectList(db.CATEGORIA.ToList(), "IDCategoria", "Nombre", IDCategoria);
             ViewBag.IDCategoriaFK = ViewBag.IDCategoria;
             ViewBag.IDClienteFK = ViewBag.IDEmpresa;

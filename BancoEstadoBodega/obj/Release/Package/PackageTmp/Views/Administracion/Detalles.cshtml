@@ -60,6 +60,7 @@
 
         @if (ViewContext.HttpContext.User.IsInRole("administradores"))
         {
+
             
             <dt>
                 @Html.DisplayNameFor(model => model.UnidadesXCaja)
@@ -125,6 +126,22 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Posicion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UsuarioUltimaEdicion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UsuarioUltimaEdicion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaUltimaEdicion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaUltimaEdicion)
             </dd>
         }
        
