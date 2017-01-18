@@ -53,8 +53,10 @@
                                     <td> @item.descripcion </td>
                                     <!-- <td> @item.origen </td> --> 
                                     <td> @item.destino </td>
-                                    <td> @item.fechaSolicitud</td>
-                                    <td> @item.fechaEntrega</td>
+                                    <td>
+                                        @(item.fechaSolicitud.HasValue ? item.fechaSolicitud.Value.ToString("dd/MM/yyyy") : "")</td>
+                                    <td>
+                                        @(item.fechaEntrega.HasValue ? item.fechaEntrega.Value.ToString("dd/MM/yyyy") : "")</td>
                                     <td> @item.codigoSeguimiento </td>
                                     @if (item.estado == "Solicitada")
                                     {
