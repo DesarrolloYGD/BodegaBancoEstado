@@ -1,0 +1,130 @@
+﻿@model BancoEstadoBodega.Models.LibroDiario
+
+@{
+    
+}
+
+<h2>Agregar Registro</h2>
+
+<div>
+    <form action="@Url.Action("CrearLibro", "Reporte")" id="forma" enctype="multipart/form-data" method="post">
+
+        <div class="modal-body">
+            <div class="input-group">
+                    <span class="input-group-addon">Tipo Encomienda</span>
+                    @Html.DropDownList("id_TipoEncomienda", null,"Seleccione", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.id_TipoEncomienda, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Tipo Empaque</span>
+                @Html.DropDownList("id_TipoEmpaque", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_TipoEmpaque, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Origen</span>
+                @Html.DropDownList("id_Empresa", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_Empresa, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Forma Despacho</span>
+                @Html.DropDownList("id_Trasladodespacho", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_Trasladodespacho, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Valija Interna</span>
+                @Html.DropDownList("id_Valija", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_Valija, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Dirección</span>
+                <input type="text" class="form-control" name="Destino" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Comuna</span>
+                <input type="text" class="form-control" name="Comuna" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Fecha Solicitud</span>
+                <input type="date" class="form-control" name="FechaSolicitud" placeholder="Fecha">
+                
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Fecha Entrega</span>
+                <input type="date" class="form-control" name="FechaEntrega" placeholder="Fecha">
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Seguimiento</span>
+                <input type="text" class="form-control" name="CodigoSeguimiento" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Clasificación</span>
+                @Html.DropDownList("id_TipoCampaña", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_TipoCampaña, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Descripcion Entrega</span>
+                <input type="text" class="form-control" name="CampañaObs" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Area</span>
+                @Html.DropDownList("id_Area", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_Area, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Mandante</span>
+                <input type="text" class="form-control" name="Mandante" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Receptor</span>
+                <input type="text" class="form-control" name="Receptor" placeholder="Destino" required>
+            </div>
+            <br />
+
+            <div class="input-group">
+                <span class="input-group-addon">Bultos</span>
+                <input type="text" class="form-control" name="Bultos" placeholder="Destino" required>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Mecanizado</span>
+                @Html.DropDownList("id_Meca", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_Meca, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon">Tipo Despacho</span>
+                @Html.DropDownList("id_TipoDespacho", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.id_TipoDespacho, "", new { @class = "text-danger" })
+            </div>
+            <br />
+
+            <div class="input-group">
+                <span class="input-group-addon">Costo despacho</span>
+                <input type="text" class="form-control" name="costedespacho" placeholder="Destino" required>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+
+    </form>
+
+
+</div>
+

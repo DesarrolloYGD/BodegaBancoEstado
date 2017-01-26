@@ -151,6 +151,47 @@
       <End Role="Mecanizado" EntitySet="Mecanizado" />
       <End Role="SolicitudPedido" EntitySet="SolicitudPedido" />
     </AssociationSet>
+    <EntitySet Name="Empresas" EntityType="pruebatotalNewModel.Empresas" />
+    <EntitySet Name="TipoCampaña" EntityType="pruebatotalNewModel.TipoCampaña" />
+    <EntitySet Name="ValijaInterna" EntityType="pruebatotalNewModel.ValijaInterna" />
+    <EntitySet Name="LibroDiario" EntityType="pruebatotalNewModel.LibroDiario" />
+    <AssociationSet Name="fk_Area" Association="pruebatotalNewModel.fk_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Empresa" Association="pruebatotalNewModel.fk_Empresa">
+      <End Role="Empresas" EntitySet="Empresas" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Empaque" Association="pruebatotalNewModel.fk_Empaque">
+      <End Role="TipoEmpaque" EntitySet="TipoEmpaque" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Mecanizado" Association="pruebatotalNewModel.fk_Mecanizado">
+      <End Role="Mecanizado" EntitySet="Mecanizado" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TipoCampaña" Association="pruebatotalNewModel.fk_TipoCampaña">
+      <End Role="TipoCampaña" EntitySet="TipoCampaña" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Traslado" Association="pruebatotalNewModel.fk_Traslado">
+      <End Role="TrasladoDespacho" EntitySet="TrasladoDespacho" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ValijaInterna" Association="pruebatotalNewModel.fk_ValijaInterna">
+      <End Role="ValijaInterna" EntitySet="ValijaInterna" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LibroDiar__id_Ti__125EB334" Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334">
+      <End Role="TipoDespacho" EntitySet="TipoDespacho" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LibroDiar__id_Ti__1352D76D" Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D">
+      <End Role="TipoEncomienda" EntitySet="TipoEncomienda" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <EntitySet Name="ServicioMoto" EntityType="pruebatotalNewModel.ServicioMoto" />
   </EntityContainer>
   <EntityType Name="BODEGA">
     <Key>
@@ -407,6 +448,7 @@
     <Property Name="vigente" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK_SolicitudPedido_Area" FromRole="Area" ToRole="SolicitudPedido" />
     <NavigationProperty Name="Solicitud" Relationship="pruebatotalNewModel.FK_Solicitud_Area" FromRole="Area" ToRole="Solicitud" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_Area" FromRole="Area" ToRole="LibroDiario" />
   </EntityType>
   <EntityType Name="SolicitudPedido">
     <Key>
@@ -452,6 +494,7 @@
     <Property Name="descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK_SolicitudPedido_TipoDespacho1" FromRole="TipoDespacho" ToRole="SolicitudPedido" />
     <NavigationProperty Name="Solicitud" Relationship="pruebatotalNewModel.FK_Solicitud_TipoDespacho" FromRole="TipoDespacho" ToRole="Solicitud" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334" FromRole="TipoDespacho" ToRole="LibroDiario" />
   </EntityType>
   <EntityType Name="TipoEmpaque">
     <Key>
@@ -461,15 +504,17 @@
     <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK_SolicitudPedido_TipoEmpaque" FromRole="TipoEmpaque" ToRole="SolicitudPedido" />
     <NavigationProperty Name="Solicitud" Relationship="pruebatotalNewModel.FK_Solicitud_TipoEmpaque" FromRole="TipoEmpaque" ToRole="Solicitud" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_Empaque" FromRole="TipoEmpaque" ToRole="LibroDiario" />
   </EntityType>
   <EntityType Name="TipoEncomienda">
     <Key>
       <PropertyRef Name="idTipoEncomienda" />
     </Key>
     <Property Name="idTipoEncomienda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tipoEncomienda1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tipoEncomienda" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK_SolicitudPedido_TipoEncomienda" FromRole="TipoEncomienda" ToRole="SolicitudPedido" />
     <NavigationProperty Name="Solicitud" Relationship="pruebatotalNewModel.FK_Solicitud_TipoEncomienda" FromRole="TipoEncomienda" ToRole="Solicitud" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D" FromRole="TipoEncomienda" ToRole="LibroDiario" />
   </EntityType>
   <EntityType Name="TipoPedido">
     <Key>
@@ -488,6 +533,7 @@
     <Property Name="descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK_SolicitudPedido_TrasladoDespacho" FromRole="TrasladoDespacho" ToRole="SolicitudPedido" />
     <NavigationProperty Name="Solicitud" Relationship="pruebatotalNewModel.FK_Solicitud_TrasladoDespacho" FromRole="TrasladoDespacho" ToRole="Solicitud" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_Traslado" FromRole="TrasladoDespacho" ToRole="LibroDiario" />
   </EntityType>
   <Association Name="FK_SolicitudPedido_Area">
     <End Type="pruebatotalNewModel.Area" Role="Area" Multiplicity="0..1" />
@@ -954,6 +1000,7 @@
     <Property Name="IdMeca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="SolicitudPedido" Relationship="pruebatotalNewModel.FK__Solicitud__idMec__789EE131" FromRole="Mecanizado" ToRole="SolicitudPedido" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_Mecanizado" FromRole="Mecanizado" ToRole="LibroDiario" />
   </EntityType>
   <Association Name="FK__Solicitud__idMec__789EE131">
     <End Type="pruebatotalNewModel.Mecanizado" Role="Mecanizado" Multiplicity="0..1" />
@@ -967,4 +1014,183 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Empresas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_Empresa" FromRole="Empresas" ToRole="LibroDiario" />
+  </EntityType>
+  <EntityType Name="TipoCampaña">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_TipoCampaña" FromRole="TipoCampaña" ToRole="LibroDiario" />
+  </EntityType>
+  <EntityType Name="ValijaInterna">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LibroDiario" Relationship="pruebatotalNewModel.fk_ValijaInterna" FromRole="ValijaInterna" ToRole="LibroDiario" />
+  </EntityType>
+  <EntityType Name="LibroDiario">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_TipoEmpaque" Type="Int32" Nullable="false" />
+    <Property Name="id_Empresa" Type="Int32" Nullable="false" />
+    <Property Name="id_Trasladodespacho" Type="Int32" Nullable="false" />
+    <Property Name="id_Valija" Type="Int32" Nullable="false" />
+    <Property Name="Destino" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Comuna" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="FechaSolicitud" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="FechaEntrega" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="CodigoSeguimiento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id_TipoCampaña" Type="Int32" Nullable="false" />
+    <Property Name="CampañaObs" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="id_Area" Type="Int32" Nullable="false" />
+    <Property Name="Mandante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Receptor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bultos" Type="Int32" Nullable="false" />
+    <Property Name="Obs" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="id_Meca" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="pruebatotalNewModel.fk_Area" FromRole="LibroDiario" ToRole="Area" />
+    <NavigationProperty Name="Empresas" Relationship="pruebatotalNewModel.fk_Empresa" FromRole="LibroDiario" ToRole="Empresas" />
+    <NavigationProperty Name="TipoEmpaque" Relationship="pruebatotalNewModel.fk_Empaque" FromRole="LibroDiario" ToRole="TipoEmpaque" />
+    <NavigationProperty Name="Mecanizado" Relationship="pruebatotalNewModel.fk_Mecanizado" FromRole="LibroDiario" ToRole="Mecanizado" />
+    <NavigationProperty Name="TipoCampaña" Relationship="pruebatotalNewModel.fk_TipoCampaña" FromRole="LibroDiario" ToRole="TipoCampaña" />
+    <NavigationProperty Name="TrasladoDespacho" Relationship="pruebatotalNewModel.fk_Traslado" FromRole="LibroDiario" ToRole="TrasladoDespacho" />
+    <NavigationProperty Name="ValijaInterna" Relationship="pruebatotalNewModel.fk_ValijaInterna" FromRole="LibroDiario" ToRole="ValijaInterna" />
+    <Property Name="id_TipoDespacho" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TipoDespacho" Relationship="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334" FromRole="LibroDiario" ToRole="TipoDespacho" />
+    <Property Name="id_TipoEncomienda" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TipoEncomienda" Relationship="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D" FromRole="LibroDiario" ToRole="TipoEncomienda" />
+    <Property Name="costedespacho" Type="Int32" />
+    <Property Name="costeMeca" Type="Int32" />
+    <Property Name="TotalMeca" Type="Int32" />
+  </EntityType>
+  <Association Name="fk_Area">
+    <End Type="pruebatotalNewModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="idArea" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Area" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Empresa">
+    <End Type="pruebatotalNewModel.Empresas" Role="Empresas" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresas">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Empaque">
+    <End Type="pruebatotalNewModel.TipoEmpaque" Role="TipoEmpaque" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoEmpaque">
+        <PropertyRef Name="idTipoEmpaque" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoEmpaque" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Mecanizado">
+    <End Type="pruebatotalNewModel.Mecanizado" Role="Mecanizado" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mecanizado">
+        <PropertyRef Name="IdMeca" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Meca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TipoCampaña">
+    <End Type="pruebatotalNewModel.TipoCampaña" Role="TipoCampaña" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoCampaña">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoCampaña" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Traslado">
+    <End Type="pruebatotalNewModel.TrasladoDespacho" Role="TrasladoDespacho" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrasladoDespacho">
+        <PropertyRef Name="idTrasladoDespacho" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Trasladodespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ValijaInterna">
+    <End Type="pruebatotalNewModel.ValijaInterna" Role="ValijaInterna" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ValijaInterna">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Valija" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LibroDiar__id_Ti__125EB334">
+    <End Type="pruebatotalNewModel.TipoDespacho" Role="TipoDespacho" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDespacho">
+        <PropertyRef Name="idTipoDespacho" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoDespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LibroDiar__id_Ti__1352D76D">
+    <End Type="pruebatotalNewModel.TipoEncomienda" Role="TipoEncomienda" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.LibroDiario" Role="LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoEncomienda">
+        <PropertyRef Name="idTipoEncomienda" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoEncomienda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ServicioMoto">
+    <Key>
+      <PropertyRef Name="MotoID" />
+    </Key>
+    <Property Name="MotoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DireccionRetiro" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DireccionEntrega" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PersonaRecibe" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

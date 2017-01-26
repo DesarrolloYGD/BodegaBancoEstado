@@ -188,7 +188,7 @@
     <EntitySetMapping Name="TipoEncomienda">
       <EntityTypeMapping TypeName="pruebatotalNewModel.TipoEncomienda">
         <MappingFragment StoreEntitySet="TipoEncomienda">
-          <ScalarProperty Name="tipoEncomienda1" ColumnName="tipoEncomienda" />
+          <ScalarProperty Name="tipoEncomienda" ColumnName="tipoEncomienda" />
           <ScalarProperty Name="idTipoEncomienda" ColumnName="idTipoEncomienda" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -449,6 +449,70 @@
         <MappingFragment StoreEntitySet="Mecanizado">
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="IdMeca" ColumnName="IdMeca" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresas">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.Empresas">
+        <MappingFragment StoreEntitySet="Empresas">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoCampaña">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.TipoCampaña">
+        <MappingFragment StoreEntitySet="TipoCampaña">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ValijaInterna">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.ValijaInterna">
+        <MappingFragment StoreEntitySet="ValijaInterna">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LibroDiario">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.LibroDiario">
+        <MappingFragment StoreEntitySet="LibroDiario">
+          <ScalarProperty Name="TotalMeca" ColumnName="TotalMeca" />
+          <ScalarProperty Name="costeMeca" ColumnName="costeMeca" />
+          <ScalarProperty Name="costedespacho" ColumnName="costedespacho" />
+          <ScalarProperty Name="id_TipoEncomienda" ColumnName="id_TipoEncomienda" />
+          <ScalarProperty Name="id_TipoDespacho" ColumnName="id_TipoDespacho" />
+          <ScalarProperty Name="id_Meca" ColumnName="id_Meca" />
+          <ScalarProperty Name="Obs" ColumnName="Obs" />
+          <ScalarProperty Name="Bultos" ColumnName="Bultos" />
+          <ScalarProperty Name="Receptor" ColumnName="Receptor" />
+          <ScalarProperty Name="Mandante" ColumnName="Mandante" />
+          <ScalarProperty Name="id_Area" ColumnName="id_Area" />
+          <ScalarProperty Name="CampañaObs" ColumnName="CampañaObs" />
+          <ScalarProperty Name="id_TipoCampaña" ColumnName="id_TipoCampaña" />
+          <ScalarProperty Name="CodigoSeguimiento" ColumnName="CodigoSeguimiento" />
+          <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+          <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
+          <ScalarProperty Name="Comuna" ColumnName="Comuna" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+          <ScalarProperty Name="id_Valija" ColumnName="id_Valija" />
+          <ScalarProperty Name="id_Trasladodespacho" ColumnName="id_Trasladodespacho" />
+          <ScalarProperty Name="id_Empresa" ColumnName="id_Empresa" />
+          <ScalarProperty Name="id_TipoEmpaque" ColumnName="id_TipoEmpaque" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServicioMoto">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.ServicioMoto">
+        <MappingFragment StoreEntitySet="ServicioMoto">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="PersonaRecibe" ColumnName="PersonaRecibe" />
+          <ScalarProperty Name="DireccionEntrega" ColumnName="DireccionEntrega" />
+          <ScalarProperty Name="DireccionRetiro" ColumnName="DireccionRetiro" />
+          <ScalarProperty Name="MotoID" ColumnName="MotoID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

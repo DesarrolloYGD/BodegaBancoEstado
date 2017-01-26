@@ -143,6 +143,41 @@
     <Property Name="idArea" Type="int" />
     <Property Name="cantidad" Type="int" />
   </EntityType>
+  <EntityType Name="Empresas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LibroDiario">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_TipoEmpaque" Type="int" Nullable="false" />
+    <Property Name="id_Empresa" Type="int" Nullable="false" />
+    <Property Name="id_Trasladodespacho" Type="int" Nullable="false" />
+    <Property Name="id_Valija" Type="int" Nullable="false" />
+    <Property Name="Destino" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Comuna" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="FechaSolicitud" Type="datetime" Nullable="false" />
+    <Property Name="FechaEntrega" Type="datetime" Nullable="false" />
+    <Property Name="CodigoSeguimiento" Type="varchar" MaxLength="50" />
+    <Property Name="id_TipoCampaña" Type="int" Nullable="false" />
+    <Property Name="CampañaObs" Type="varchar" MaxLength="300" />
+    <Property Name="id_Area" Type="int" Nullable="false" />
+    <Property Name="Mandante" Type="varchar" MaxLength="50" />
+    <Property Name="Receptor" Type="varchar" MaxLength="50" />
+    <Property Name="Bultos" Type="int" Nullable="false" />
+    <Property Name="Obs" Type="varchar" MaxLength="300" />
+    <Property Name="id_Meca" Type="int" Nullable="false" />
+    <Property Name="id_TipoDespacho" Type="int" Nullable="false" />
+    <Property Name="id_TipoEncomienda" Type="int" Nullable="false" />
+    <Property Name="costedespacho" Type="int" />
+    <Property Name="costeMeca" Type="int" />
+    <Property Name="TotalMeca" Type="int" />
+  </EntityType>
   <EntityType Name="Mecanizado">
     <Key>
       <PropertyRef Name="IdMeca" />
@@ -215,6 +250,16 @@
     </Key>
     <Property Name="IdRegion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ServicioMoto">
+    <Key>
+      <PropertyRef Name="MotoID" />
+    </Key>
+    <Property Name="MotoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DireccionRetiro" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="DireccionEntrega" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="PersonaRecibe" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
   </EntityType>
   <EntityType Name="Solicitud">
     <Key>
@@ -309,6 +354,13 @@
     <Property Name="cantidadDardignac" Type="int" />
     <Property Name="fechaVencimiento" Type="datetime" />
   </EntityType>
+  <EntityType Name="TipoCampaña">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="TipoDespacho">
     <Key>
       <PropertyRef Name="idTipoDespacho" />
@@ -357,6 +409,13 @@
     <Property Name="PersSistema" Type="bit" Nullable="false" />
     <Property Name="Alias" Type="nvarchar" MaxLength="50" />
     <Property Name="IDCARGO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ValijaInterna">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -436,6 +495,30 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__LibroDiar__id_Ti__125EB334">
+    <End Role="TipoDespacho" Type="Self.TipoDespacho" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDespacho">
+        <PropertyRef Name="idTipoDespacho" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoDespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LibroDiar__id_Ti__1352D76D">
+    <End Role="TipoEncomienda" Type="Self.TipoEncomienda" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoEncomienda">
+        <PropertyRef Name="idTipoEncomienda" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoEncomienda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PRODUCTO__IDCate__571DF1D5">
     <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
     <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
@@ -481,6 +564,18 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Principal>
       <Dependent Role="SolicitudPedido">
         <PropertyRef Name="idMecanizado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="idArea" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Area" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -549,6 +644,42 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Empaque">
+    <End Role="TipoEmpaque" Type="Self.TipoEmpaque" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoEmpaque">
+        <PropertyRef Name="idTipoEmpaque" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoEmpaque" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Empresa">
+    <End Role="Empresas" Type="Self.Empresas" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresas">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Mecanizado">
+    <End Role="Mecanizado" Type="Self.Mecanizado" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mecanizado">
+        <PropertyRef Name="IdMeca" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Meca" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -744,6 +875,42 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_TipoCampaña">
+    <End Role="TipoCampaña" Type="Self.TipoCampaña" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoCampaña">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_TipoCampaña" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Traslado">
+    <End Role="TrasladoDespacho" Type="Self.TrasladoDespacho" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrasladoDespacho">
+        <PropertyRef Name="idTrasladoDespacho" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Trasladodespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ValijaInterna">
+    <End Role="ValijaInterna" Type="Self.ValijaInterna" Multiplicity="1" />
+    <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ValijaInterna">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LibroDiario">
+        <PropertyRef Name="id_Valija" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="sp_listarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_obtenerDistribucion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_vincularProductosSolicitud" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -763,22 +930,27 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="COMUNA" EntityType="Self.COMUNA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Distribucion" EntityType="Self.Distribucion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empresas" EntityType="Self.Empresas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LibroDiario" EntityType="Self.LibroDiario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Mecanizado" EntityType="Self.Mecanizado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PRODUCTOBODEGA" EntityType="Self.PRODUCTOBODEGA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductoSolicitud" EntityType="Self.ProductoSolicitud" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="REGION" EntityType="Self.REGION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServicioMoto" EntityType="Self.ServicioMoto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Solicitud" EntityType="Self.Solicitud" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Solicitudes" EntityType="Self.Solicitudes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SolicitudPedido" EntityType="Self.SolicitudPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoCampaña" EntityType="Self.TipoCampaña" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoDespacho" EntityType="Self.TipoDespacho" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoEmpaque" EntityType="Self.TipoEmpaque" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoEncomienda" EntityType="Self.TipoEncomienda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoPedido" EntityType="Self.TipoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TrasladoDespacho" EntityType="Self.TrasladoDespacho" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ValijaInterna" EntityType="Self.ValijaInterna" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
       <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -809,6 +981,14 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       <End Role="CIUDAD" EntitySet="CIUDAD" />
       <End Role="COMUNA" EntitySet="COMUNA" />
     </AssociationSet>
+    <AssociationSet Name="FK__LibroDiar__id_Ti__125EB334" Association="Self.FK__LibroDiar__id_Ti__125EB334">
+      <End Role="TipoDespacho" EntitySet="TipoDespacho" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LibroDiar__id_Ti__1352D76D" Association="Self.FK__LibroDiar__id_Ti__1352D76D">
+      <End Role="TipoEncomienda" EntitySet="TipoEncomienda" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
     <AssociationSet Name="FK__PRODUCTO__IDCate__571DF1D5" Association="Self.FK__PRODUCTO__IDCate__571DF1D5">
       <End Role="CATEGORIA" EntitySet="CATEGORIA" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -824,6 +1004,10 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <AssociationSet Name="FK__Solicitud__idMec__789EE131" Association="Self.FK__Solicitud__idMec__789EE131">
       <End Role="Mecanizado" EntitySet="Mecanizado" />
       <End Role="SolicitudPedido" EntitySet="SolicitudPedido" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Area" Association="Self.fk_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
     </AssociationSet>
     <AssociationSet Name="fk_Cargo" Association="Self.fk_Cargo">
       <End Role="Cargo" EntitySet="Cargo" />
@@ -844,6 +1028,18 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Empaque" Association="Self.fk_Empaque">
+      <End Role="TipoEmpaque" EntitySet="TipoEmpaque" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Empresa" Association="Self.fk_Empresa">
+      <End Role="Empresas" EntitySet="Empresas" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Mecanizado" Association="Self.fk_Mecanizado">
+      <End Role="Mecanizado" EntitySet="Mecanizado" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
     </AssociationSet>
     <AssociationSet Name="FK_PRODUCTOBODEGA_BODEGA" Association="Self.FK_PRODUCTOBODEGA_BODEGA">
       <End Role="BODEGA" EntitySet="BODEGA" />
@@ -908,6 +1104,18 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <AssociationSet Name="FK_Stock_Productos" Association="Self.FK_Stock_Productos">
       <End Role="Productos" EntitySet="Productos" />
       <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TipoCampaña" Association="Self.fk_TipoCampaña">
+      <End Role="TipoCampaña" EntitySet="TipoCampaña" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Traslado" Association="Self.fk_Traslado">
+      <End Role="TrasladoDespacho" EntitySet="TrasladoDespacho" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ValijaInterna" Association="Self.fk_ValijaInterna">
+      <End Role="ValijaInterna" EntitySet="ValijaInterna" />
+      <End Role="LibroDiario" EntitySet="LibroDiario" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

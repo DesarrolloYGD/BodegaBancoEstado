@@ -19,6 +19,7 @@ namespace BancoEstadoBodega.Models
         {
             this.SolicitudPedido = new HashSet<SolicitudPedido>();
             this.Solicitud = new HashSet<Solicitud>();
+            this.LibroDiario = new HashSet<LibroDiario>();
         }
     
         public int idArea { get; set; }
@@ -29,5 +30,7 @@ namespace BancoEstadoBodega.Models
         public virtual ICollection<SolicitudPedido> SolicitudPedido { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Solicitud> Solicitud { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LibroDiario> LibroDiario { get; set; }
     }
 }

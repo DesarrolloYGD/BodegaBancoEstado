@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="840e9056384e4ba1ace85ff091779d4c" Name="Diagram1" ZoomLevel="83">
+      <Diagram DiagramId="840e9056384e4ba1ace85ff091779d4c" Name="Diagram1" ZoomLevel="62">
         <EntityTypeShape EntityType="pruebatotalNewModel.BODEGA" Width="1.5" PointX="7.5" PointY="5.375" />
         <EntityTypeShape EntityType="pruebatotalNewModel.CATEGORIA" Width="1.5" PointX="7.5" PointY="8.875" />
         <EntityTypeShape EntityType="pruebatotalNewModel.CIUDAD" Width="1.5" PointX="3" PointY="3.625" />
@@ -65,6 +65,20 @@
         <AssociationConnector Association="pruebatotalNewModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="pruebatotalNewModel.Mecanizado" Width="1.5" PointX="0.75" PointY="6.875" />
         <AssociationConnector Association="pruebatotalNewModel.FK__Solicitud__idMec__789EE131" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Empresas" Width="1.5" PointX="3.75" PointY="6.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.TipoCampaña" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.ValijaInterna" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.LibroDiario" Width="1.5" PointX="12.625" PointY="16.5" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Area" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Empresa" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Empaque" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Mecanizado" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_TipoCampaña" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Traslado" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_ValijaInterna" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334" />
+        <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.ServicioMoto" Width="1.5" PointX="0.75" PointY="15.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

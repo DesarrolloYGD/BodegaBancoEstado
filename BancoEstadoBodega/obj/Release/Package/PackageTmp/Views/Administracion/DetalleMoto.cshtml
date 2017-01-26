@@ -1,0 +1,57 @@
+﻿@model BancoEstadoBodega.Models.ServicioMoto
+
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DetalleMoto</title>
+</head>
+<body>
+    <div>
+        <h4>ServicioMoto</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DireccionRetiro)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DireccionRetiro)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.DireccionEntrega)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DireccionEntrega)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonaRecibe)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PersonaRecibe)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MotoID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -18,6 +18,7 @@ namespace BancoEstadoBodega.Models
         public Mecanizado()
         {
             this.SolicitudPedido = new HashSet<SolicitudPedido>();
+            this.LibroDiario = new HashSet<LibroDiario>();
         }
     
         public int IdMeca { get; set; }
@@ -25,5 +26,7 @@ namespace BancoEstadoBodega.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SolicitudPedido> SolicitudPedido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LibroDiario> LibroDiario { get; set; }
     }
 }

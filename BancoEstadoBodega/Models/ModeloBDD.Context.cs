@@ -58,6 +58,11 @@ namespace BancoEstadoBodega.Models
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Mecanizado> Mecanizado { get; set; }
+        public virtual DbSet<Empresas> Empresas { get; set; }
+        public virtual DbSet<TipoCampaña> TipoCampaña { get; set; }
+        public virtual DbSet<ValijaInterna> ValijaInterna { get; set; }
+        public virtual DbSet<LibroDiario> LibroDiario { get; set; }
+        public virtual DbSet<ServicioMoto> ServicioMoto { get; set; }
     
         public virtual ObjectResult<sp_obtenerDistribucion_Result> sp_obtenerDistribucion()
         {

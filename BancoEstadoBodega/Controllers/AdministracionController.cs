@@ -16,6 +16,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
 using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity;
 
 namespace BancoEstadoBodega.Controllers
 {
@@ -85,7 +86,122 @@ namespace BancoEstadoBodega.Controllers
         }
 
 
+        public ActionResult ServicioMoto()
+        {
+            
+            return View();
+        }
 
+        // POST: PRODUCTOes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ServicioMoto([Bind(Include = "DireccionRetiro, DireccionEntrega, PersonaRecibe, Descripcion")] ServicioMoto moto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.ServicioMoto.Add(moto);
+                    db.SaveChanges();
+                    
+
+                    /*-------------------------MENSAJE DE CORREO----------------------*/
+
+                    //Creamos un nuevo Objeto de mensaje
+                    System.Net.Mail.MailMessage mmsg = new System.Net.Mail.MailMessage();
+
+                    //Direccion de correo electronico a la que queremos enviar el mensaje
+                    //if (Request.IsAuthenticated)
+                    //{
+                    //mmsg.To.Add(User.Identity.GetUserName());
+                    //}
+                    mmsg.To.Add("logistica@promomas.cl");
+
+                    //Nota: La propiedad To es una colección que permite enviar el mensaje a más de un destinatario
+
+                    //Asunto
+                    mmsg.Subject = "Servicio Moto";
+                    mmsg.SubjectEncoding = System.Text.Encoding.UTF8;
+
+                    //Direccion de correo electronico que queremos que reciba una copia del mensaje
+                    if (Request.IsAuthenticated)
+                    {
+                        mmsg.Bcc.Add(User.Identity.GetUserName());
+                    }
+                    else
+                    {
+                        mmsg.To.Add("lbasic@promomas.cl");
+                    }
+
+
+                    //mmsg.Bcc.Add(user); //Opcional;
+
+                    //LoginViewModel model3;
+
+                    //Cuerpo del Mensaje
+                    DateTime fecha = DateTime.Now;
+                    string fech = fecha.ToString("dd/MM/yyyy");
+
+                    mmsg.Body = "Hemos recibido su solicitud de servicio moto numero: " + moto.MotoID + "\nCon fecha: " + fech + "\nPara mas detalles porfavor visitar la página sección Servicio Moto";
+                    mmsg.BodyEncoding = System.Text.Encoding.UTF8;
+                    mmsg.IsBodyHtml = false; //Si no queremos que se envíe como HTML
+
+                    //Correo electronico desde la que enviamos el mensaje
+                    mmsg.From = new System.Net.Mail.MailAddress("solicitudes@promomas.cl");
+
+                    /*-------------------------CLIENTE DE CORREO----------------------*/
+
+                    //Creamos un objeto de cliente de correo
+                    System.Net.Mail.SmtpClient cliente = new System.Net.Mail.SmtpClient();
+
+                    //Hay que crear las credenciales del correo emisor
+                    cliente.Credentials = new System.Net.NetworkCredential("solicitudes@promomas.cl", "medalla24");
+
+                    //Lo siguiente es obligatorio si enviamos el mensaje desde Gmail
+                    /*
+                    cliente.Port = 587;
+                    cliente.EnableSsl = true;
+                    */
+                    cliente.Host = "mail.promomas.cl"; //Para Gmail "smtp.gmail.com";
+
+                    /*-------------------------ENVIO DE CORREO----------------------*/
+
+                    try
+                    {
+                        //Enviamos el mensaje      
+                        cliente.Send(mmsg);
+                    }
+                    catch (System.Net.Mail.SmtpException ex)
+                    {
+                        //Aquí gestionamos los errores al intentar enviar el correo
+                    }
+                    return RedirectToAction("IndexMoto");
+
+                    
+                }
+                catch (DbEntityValidationException ex)
+                {
+                }
+
+                
+            }
+            return View(moto);
+        }
+
+        public ActionResult IndexMoto()
+        {
+            int codigo = EnRol();
+            List<ServicioMoto> lista = db.ServicioMoto.ToList();
+            return View(lista);
+        }
+
+        public ViewResult DetalleMoto(int id)
+        {
+            ServicioMoto moto = db.ServicioMoto.Find(id);
+            return View(moto);
+        }
         #region CATEGORIA
         public ActionResult Categoria()
         {
