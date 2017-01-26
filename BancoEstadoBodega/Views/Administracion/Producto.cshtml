@@ -65,6 +65,8 @@
                             <tr class="success">
                                 <th>Codigo</th>
                                 <th>Nombre</th>
+                                <th>Ult. Modif.</th>
+                                <th>User Ult. Modif.</th>
                                 <th>Categoria</th>
                                 <th>Stock Total</th>
                                 <th>Foto</th>
@@ -79,6 +81,10 @@
                                     <td>
                                         @item.Nombre
                                     </td>
+                                    <td>
+                                        @(item.FechaUltimaEdicion.HasValue ? item.FechaUltimaEdicion.Value.ToString("dd/MM/yyyy") : "")
+                                    </td>
+                                    <td>@item.UsuarioUltimaEdicion</td>
                                     <td> @item.CATEGORIA.Nombre </td>
                                     <td> @item.CantidadTotal </td>
                                     <td>
