@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="840e9056384e4ba1ace85ff091779d4c" Name="Diagram1" ZoomLevel="62">
+      <Diagram DiagramId="840e9056384e4ba1ace85ff091779d4c" Name="Diagram1" ZoomLevel="106">
         <EntityTypeShape EntityType="pruebatotalNewModel.BODEGA" Width="1.5" PointX="7.5" PointY="5.375" />
         <EntityTypeShape EntityType="pruebatotalNewModel.CATEGORIA" Width="1.5" PointX="7.5" PointY="8.875" />
         <EntityTypeShape EntityType="pruebatotalNewModel.CIUDAD" Width="1.5" PointX="3" PointY="3.625" />
@@ -79,6 +79,11 @@
         <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334" />
         <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D" />
         <EntityTypeShape EntityType="pruebatotalNewModel.ServicioMoto" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.ServiEstado" Width="1.5" PointX="17.75" PointY="10.625" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Sucursales" Width="1.5" PointX="7.5" PointY="19.25" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Comuna" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Comuna2" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Sucursal" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

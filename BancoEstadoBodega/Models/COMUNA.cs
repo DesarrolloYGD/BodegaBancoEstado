@@ -19,6 +19,8 @@ namespace BancoEstadoBodega.Models
         {
             this.BODEGA = new HashSet<BODEGA>();
             this.CLIENTE = new HashSet<CLIENTE>();
+            this.Sucursales = new HashSet<Sucursales>();
+            this.ServiEstado = new HashSet<ServiEstado>();
         }
     
         public int IdComuna { get; set; }
@@ -30,5 +32,9 @@ namespace BancoEstadoBodega.Models
         public virtual CIUDAD CIUDAD { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTE> CLIENTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sucursales> Sucursales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiEstado> ServiEstado { get; set; }
     }
 }

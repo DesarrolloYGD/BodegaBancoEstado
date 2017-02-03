@@ -96,6 +96,7 @@
     <EntitySetMapping Name="REGION">
       <EntityTypeMapping TypeName="pruebatotalNewModel.REGION">
         <MappingFragment StoreEntitySet="REGION">
+          <ScalarProperty Name="ISO_3166_2_CL" ColumnName="ISO_3166_2_CL" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
         </MappingFragment>
@@ -513,6 +514,32 @@
           <ScalarProperty Name="DireccionEntrega" ColumnName="DireccionEntrega" />
           <ScalarProperty Name="DireccionRetiro" ColumnName="DireccionRetiro" />
           <ScalarProperty Name="MotoID" ColumnName="MotoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiEstado">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.ServiEstado">
+        <MappingFragment StoreEntitySet="ServiEstado">
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="idComuna" ColumnName="idComuna" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="idServiEstado" ColumnName="idServiEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sucursales">
+      <EntityTypeMapping TypeName="pruebatotalNewModel.Sucursales">
+        <MappingFragment StoreEntitySet="Sucursales">
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+          <ScalarProperty Name="Zona" ColumnName="Zona" />
+          <ScalarProperty Name="Subgerencia" ColumnName="Subgerencia" />
+          <ScalarProperty Name="id_Comuna" ColumnName="id_Comuna" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

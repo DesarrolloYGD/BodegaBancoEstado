@@ -430,7 +430,7 @@ namespace BancoEstadoBodega.Controllers
                 {
                     new BlobService().AddImgProducto(imagenProducto, imgName);//se activa la funcion addImgProducto de la clase BlobService
                 }
-
+                db.Entry(pRODUCTO).State = EntityState.Modified;
                 dbProd.UrlImagen = pRODUCTO.UrlImagen;
                 db.SaveChanges();
 

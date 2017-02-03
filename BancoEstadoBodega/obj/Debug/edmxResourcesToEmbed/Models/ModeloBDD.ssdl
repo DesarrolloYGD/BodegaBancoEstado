@@ -250,6 +250,7 @@
     </Key>
     <Property Name="IdRegion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="ISO_3166_2_CL" Type="varchar" MaxLength="5" />
   </EntityType>
   <EntityType Name="ServicioMoto">
     <Key>
@@ -260,6 +261,17 @@
     <Property Name="DireccionEntrega" Type="varchar" MaxLength="250" Nullable="false" />
     <Property Name="PersonaRecibe" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiEstado">
+    <Key>
+      <PropertyRef Name="idServiEstado" />
+    </Key>
+    <Property Name="idServiEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="idComuna" Type="int" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="idSucursal" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Solicitud">
     <Key>
@@ -353,6 +365,19 @@
     <Property Name="cantidadQuilicura" Type="int" />
     <Property Name="cantidadDardignac" Type="int" />
     <Property Name="fechaVencimiento" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Sucursales">
+    <Key>
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idSucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="id_Comuna" Type="int" Nullable="false" />
+    <Property Name="Subgerencia" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Zona" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Categoria" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="TipoCampaña">
     <Key>
@@ -588,6 +613,30 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Principal>
       <Dependent Role="Usuario">
         <PropertyRef Name="IDCARGO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Comuna">
+    <End Role="COMUNA" Type="Self.COMUNA" Multiplicity="1" />
+    <End Role="Sucursales" Type="Self.Sucursales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="IdComuna" />
+      </Principal>
+      <Dependent Role="Sucursales">
+        <PropertyRef Name="id_Comuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Comuna2">
+    <End Role="COMUNA" Type="Self.COMUNA" Multiplicity="1" />
+    <End Role="ServiEstado" Type="Self.ServiEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="IdComuna" />
+      </Principal>
+      <Dependent Role="ServiEstado">
+        <PropertyRef Name="idComuna" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -875,6 +924,18 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Sucursal">
+    <End Role="Sucursales" Type="Self.Sucursales" Multiplicity="1" />
+    <End Role="ServiEstado" Type="Self.ServiEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursales">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="ServiEstado">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_TipoCampaña">
     <End Role="TipoCampaña" Type="Self.TipoCampaña" Multiplicity="1" />
     <End Role="LibroDiario" Type="Self.LibroDiario" Multiplicity="*" />
@@ -939,10 +1000,12 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <EntitySet Name="ProductoSolicitud" EntityType="Self.ProductoSolicitud" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="REGION" EntityType="Self.REGION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ServicioMoto" EntityType="Self.ServicioMoto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiEstado" EntityType="Self.ServiEstado" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Solicitud" EntityType="Self.Solicitud" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Solicitudes" EntityType="Self.Solicitudes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SolicitudPedido" EntityType="Self.SolicitudPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sucursales" EntityType="Self.Sucursales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoCampaña" EntityType="Self.TipoCampaña" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoDespacho" EntityType="Self.TipoDespacho" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoEmpaque" EntityType="Self.TipoEmpaque" Schema="dbo" store:Type="Tables" />
@@ -1012,6 +1075,14 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <AssociationSet Name="fk_Cargo" Association="Self.fk_Cargo">
       <End Role="Cargo" EntitySet="Cargo" />
       <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Comuna" Association="Self.fk_Comuna">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="Sucursales" EntitySet="Sucursales" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Comuna2" Association="Self.fk_Comuna2">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="ServiEstado" EntitySet="ServiEstado" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1104,6 +1175,10 @@ advertencia 6002: La tabla o vista 'pruebatotalNew.sys.database_firewall_rules' 
     <AssociationSet Name="FK_Stock_Productos" Association="Self.FK_Stock_Productos">
       <End Role="Productos" EntitySet="Productos" />
       <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Sucursal" Association="Self.fk_Sucursal">
+      <End Role="Sucursales" EntitySet="Sucursales" />
+      <End Role="ServiEstado" EntitySet="ServiEstado" />
     </AssociationSet>
     <AssociationSet Name="fk_TipoCampaña" Association="Self.fk_TipoCampaña">
       <End Role="TipoCampaña" EntitySet="TipoCampaña" />

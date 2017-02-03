@@ -63,7 +63,7 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Seguimiento</span>
-                <input type="text" class="form-control" name="CodigoSeguimiento" placeholder="Destino" required>
+                <input type="text" class="form-control" name="CodigoSeguimiento" placeholder="Codigo de seguimiento" required>
             </div>
             <br />
             <div class="input-group">
@@ -74,7 +74,7 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Descripcion Entrega</span>
-                <input type="text" class="form-control" name="CampañaObs" placeholder="Destino" required>
+                <input type="text" class="form-control" name="CampañaObs" placeholder="Observacion sobre la entrega" required>
             </div>
             <br />
             <div class="input-group">
@@ -85,18 +85,18 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Mandante</span>
-                <input type="text" class="form-control" name="Mandante" placeholder="Destino" required>
+                <input type="text" class="form-control" name="Mandante" placeholder="Usuario Mandante" required>
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Receptor</span>
-                <input type="text" class="form-control" name="Receptor" placeholder="Destino" required>
+                <input type="text" class="form-control" name="Receptor" placeholder="Usuario Receptor" required>
             </div>
             <br />
 
             <div class="input-group">
                 <span class="input-group-addon">Bultos</span>
-                <input type="text" class="form-control" name="Bultos" placeholder="Destino" required>
+                <input type="text" class="form-control" name="Bultos" placeholder="Cantidad de bultos" required>
             </div>
             <br />
             <div class="input-group">
@@ -114,7 +114,7 @@
 
             <div class="input-group">
                 <span class="input-group-addon">Costo despacho</span>
-                <input type="text" class="form-control" name="costedespacho" placeholder="Destino" required>
+                <input type="text" class="form-control" id="costo" name="costedespacho" placeholder="Costo del despacho en NETO" required>
             </div>
             <br />
         </div>
@@ -127,4 +127,26 @@
 
 
 </div>
-
+<script>
+    $(document).ready(function () {
+        $("select[name=id_Trasladodespacho]").change(function () {
+            var despacho = $('select[name=id_Trasladodespacho]').val();
+            if (despacho == 2) {
+                $('input[name=costedespacho]').val(6723);
+                $('#costo').prop('disabled', true);
+            }
+            else
+                if (despacho == 3) {
+                    $('input[name=costedespacho]').val(4202);
+                    $('#costo').prop('disabled', true);
+                }
+                else
+                    if (despacho == 1) {
+                        $('#costo').prop('disabled', false);
+                        $('input[name=costedespacho]').val("");
+                        $('#costo').attr('placeholder', 'Debe ingresar el costo del despacho por Chilexpress/Correos en NETO');
+                    }
+            
+        });     
+    });
+</script>

@@ -12,19 +12,25 @@ namespace BancoEstadoBodega.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class REGION
+    public partial class Sucursales
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public REGION()
+        public Sucursales()
         {
-            this.CIUDAD = new HashSet<CIUDAD>();
+            this.ServiEstado = new HashSet<ServiEstado>();
         }
     
-        public int IdRegion { get; set; }
+        public int idSucursal { get; set; }
+        public int Codigo { get; set; }
         public string Nombre { get; set; }
-        public string ISO_3166_2_CL { get; set; }
+        public int id_Comuna { get; set; }
+        public string Subgerencia { get; set; }
+        public string Zona { get; set; }
+        public string Categoria { get; set; }
+        public string Direccion { get; set; }
     
+        public virtual COMUNA COMUNA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CIUDAD> CIUDAD { get; set; }
+        public virtual ICollection<ServiEstado> ServiEstado { get; set; }
     }
 }

@@ -2620,3 +2620,4 @@ C:\Users\marco\Documents\GitHub\BancoEstado\BodegaBancoEstado\BancoEstadoBodega\
 C:\Users\marco\Documents\GitHub\BancoEstado\BodegaBancoEstado\BancoEstadoBodega\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\marco\Documents\GitHub\BancoEstado\BodegaBancoEstado\BancoEstadoBodega\obj\Debug\BancoEstadoBodega.dll
 C:\Users\marco\Documents\GitHub\BancoEstado\BodegaBancoEstado\BancoEstadoBodega\obj\Debug\BancoEstadoBodega.pdb
+C:\Users\marco\Documents\GitHub\BancoEstado\BodegaBancoEstado\BancoEstadoBodega\obj\Debug\BancoEstadoBodega.csprojResolveAssemblyReference.cache

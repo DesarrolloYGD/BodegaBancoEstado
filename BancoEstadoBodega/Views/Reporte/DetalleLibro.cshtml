@@ -16,7 +16,7 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Destino)
+                Destino
             </dt>
     
             <dd>
@@ -24,7 +24,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Comuna)
+                Comuna
             </dt>
     
             <dd>
@@ -32,23 +32,24 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.FechaSolicitud)
+                Fecha Solicitud
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.FechaSolicitud)
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.FechaSolicitud))
+               
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.FechaEntrega)
+                Fecha Entrega
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.FechaEntrega)
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.FechaEntrega))
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.CodigoSeguimiento)
+               Codigo Seguimiento
             </dt>
     
             <dd>
@@ -56,7 +57,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.CampañaObs)
+                Campaña Obs
             </dt>
     
             <dd>
@@ -64,7 +65,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Mandante)
+                Mandante
             </dt>
     
             <dd>
@@ -72,7 +73,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Receptor)
+                Receptor
             </dt>
     
             <dd>
@@ -80,7 +81,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Bultos)
+                Bultos
             </dt>
     
             <dd>
@@ -88,7 +89,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Obs)
+                Observaciones
             </dt>
     
             <dd>
@@ -96,7 +97,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.costedespacho)
+                Coste despacho
             </dt>
     
             <dd>
@@ -104,7 +105,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.costeMeca)
+                Coste Mecanizado
             </dt>
     
             <dd>
@@ -112,7 +113,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TotalMeca)
+                Total Mecanizado
             </dt>
     
             <dd>
@@ -120,7 +121,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Area.nombre)
+                Area
             </dt>
     
             <dd>
@@ -128,7 +129,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Empresas.Nombre)
+                Empresa
             </dt>
     
             <dd>
@@ -136,7 +137,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TipoEmpaque.descripcion)
+                Tipo Empaque
             </dt>
     
             <dd>
@@ -144,7 +145,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Mecanizado.Descripcion)
+                Mecanizado
             </dt>
     
             <dd>
@@ -152,7 +153,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TipoCampaña.Nombre)
+                Tipo Campaña
             </dt>
     
             <dd>
@@ -160,7 +161,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TrasladoDespacho.descripcion)
+                Traslado Despacho
             </dt>
     
             <dd>
@@ -168,7 +169,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.ValijaInterna.Nombre)
+                Valija Interna
             </dt>
     
             <dd>
@@ -176,7 +177,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TipoDespacho.descripcion)
+                Tipo Despacho
             </dt>
     
             <dd>
@@ -184,7 +185,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.TipoEncomienda.tipoEncomienda)
+                Tipo Encomienda
             </dt>
     
             <dd>
