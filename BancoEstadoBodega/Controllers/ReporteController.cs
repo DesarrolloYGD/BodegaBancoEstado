@@ -154,7 +154,7 @@ namespace BancoEstadoBodega.Controllers
             }
 
             model.TotalMeca = model.Bultos * model.costeMeca;
-            
+            var costodespacho = model.costedespacho;
             db.LibroDiario.Add(model);
             db.SaveChanges();
             return RedirectToAction("IndexLibro");
