@@ -762,7 +762,6 @@
     <Content Include="Views\Reporte\Critico.cshtml" />
     <Content Include="Views\Solicitud\CrearSolicitud.cshtml" />
     <Content Include="Views\Administracion\EditarImagen.cshtml" />
-    <Content Include="Views\Reporte\LibroDiario.cshtml" />
     <Content Include="Views\Reporte\IndexLibro.cshtml" />
     <Content Include="Views\Reporte\CrearLibro.cshtml" />
     <Content Include="Views\Administracion\ServicioMoto.cshtml" />
@@ -773,6 +772,7 @@
     <Content Include="Views\Ajax\Index.cshtml" />
     <Content Include="Views\Campaña\Index.cshtml" />
     <Content Include="Views\Campaña\Datos.cshtml" />
+    <Content Include="Views\Reporte\EditarLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

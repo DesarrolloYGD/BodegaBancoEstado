@@ -518,6 +518,57 @@ namespace BancoEstadoBodega.Controllers
             }
         }
 
+         // GET: PRODUCTOes/Edit/5
+         public ActionResult EditarLibro(int? id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             LibroDiario libro = db.LibroDiario.Find(id);
+             if (libro == null)
+             {
+                 return HttpNotFound();
+             }
+             ViewBag.Id_TipoEmpaque = new SelectList(db.TipoEmpaque, "idTipoEmpaque", "descripcion", libro.id_TipoEmpaque);
+             ViewBag.Id_Empresa = new SelectList(db.Empresas, "ID", "Nombre", libro.id_Empresa);
+             ViewBag.Id_Trasladodespacho = new SelectList(db.TrasladoDespacho, "idTrasladoDespacho", "descripcion", libro.id_Trasladodespacho);
+             ViewBag.Id_Valija = new SelectList(db.ValijaInterna, "ID", "Nombre", libro.id_Valija);
+             ViewBag.Id_TipoCampaña = new SelectList(db.TipoCampaña, "ID", "Nombre", libro.id_TipoCampaña);
+             ViewBag.Id_Area = new SelectList(db.Area, "idArea", "nombre", libro.id_Area);
+             ViewBag.Id_Meca = new SelectList(db.Mecanizado, "IdMeca", "Descripcion", libro.id_Meca);
+             ViewBag.Id_TipoDespacho = new SelectList(db.TipoDespacho, "idTipoDespacho", "descripcion", libro.id_TipoDespacho);
+             ViewBag.id_TipoEncomienda = new SelectList(db.TipoEncomienda, "idTipoEncomienda", "tipoEncomienda", libro.id_TipoEncomienda);
+             return View(libro);
+         }
+ 
+         // POST: PRODUCTOes/Edit/5
+         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public ActionResult EditarLibro([Bind(Include = "id_TipoEmpaque,id_Empresa,id_Trasladodespacho,id_Valija,Destino,Comuna,FechaSolicitud,FechaEntrega,CodigoSeguimiento,id_TipoCampaña,CampañaObs,id_Area,Mandante,Receptor,Bultos,Obs,id_Meca,id_TipoDespacho,id_TipoEncomienda,costedespacho, costeMeca, TotalMeca")] LibroDiario libro)
+         {
+             if (ModelState.IsValid)
+             {
+                 db.Entry(libro).State = EntityState.Modified;
+                 ViewBag.Id_TipoEmpaque = new SelectList(db.TipoEmpaque, "idTipoEmpaque", "descripcion", libro.id_TipoEmpaque);
+                 ViewBag.Id_Empresa = new SelectList(db.Empresas, "ID", "Nombre", libro.id_Empresa);
+                 ViewBag.Id_Trasladodespacho = new SelectList(db.TrasladoDespacho, "idTrasladoDespacho", "descripcion", libro.id_Trasladodespacho);
+                 ViewBag.Id_Valija = new SelectList(db.ValijaInterna, "ID", "Nombre", libro.id_Valija);
+                 ViewBag.Id_TipoCampaña = new SelectList(db.TipoCampaña, "ID", "Nombre", libro.id_TipoCampaña);
+                 ViewBag.Id_Area = new SelectList(db.Area, "idArea", "nombre", libro.id_Area);
+                 ViewBag.Id_Meca = new SelectList(db.Mecanizado, "IdMeca", "Descripcion", libro.id_Meca);
+                 ViewBag.Id_TipoDespacho = new SelectList(db.TipoDespacho, "idTipoDespacho", "descripcion", libro.id_TipoDespacho);
+                 ViewBag.id_TipoEncomienda = new SelectList(db.TipoEncomienda, "idTipoEncomienda", "tipoEncomienda", libro.id_TipoEncomienda);
+                 
+                 db.SaveChanges();
+                 return RedirectToAction("IndexLibro");
+             }
+             return View(libro);
+         }
+ 
+
         // GET: Reporte/Edit/5
         public ActionResult Edit(int id)
         {
