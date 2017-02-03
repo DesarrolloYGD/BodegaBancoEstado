@@ -133,12 +133,12 @@
             var despacho = $('select[name=id_Trasladodespacho]').val();
             if (despacho == 2) {
                 $('input[name=costedespacho]').val(6723);
-                $('#costo').prop('disabled', true);
+                $('#costo').prop('readonly', true);
             }
             else
                 if (despacho == 3) {
                     $('input[name=costedespacho]').val(4202);
-                    $('#costo').prop('disabled', true);
+                    $('#costo').prop('readonly', true);
                 }
                 else
                     if (despacho == 1) {
