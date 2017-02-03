@@ -197,6 +197,12 @@ namespace BancoEstadoBodega.Controllers
             return View(lista);
         }
 
+        public ActionResult Prueba()
+        {
+            ViewBag.REGIONESCod_Region = new SelectList(db.REGION, "IdRegion", "Nombre");
+            return View();
+        }
+
         public ViewResult DetalleMoto(int id)
         {
             ServicioMoto moto = db.ServicioMoto.Find(id);

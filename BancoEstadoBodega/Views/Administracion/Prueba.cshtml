@@ -1,0 +1,61 @@
+﻿<div>
+    @using (Html.BeginForm("Create", "Arrendatario", FormMethod.Post, new { id = "form_arrend" }))
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">PRueba Dropdownlist</div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon">Regiones</span>
+                    @Html.DropDownList("REGIONESCod_Region", (SelectList)ViewBag.REGIONESCod_Region, "Seleccionar", new { @class = "form-control" })
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon">Ciudad</span>
+                    <select class="form-control" name="idCiudad" id="CiudadesCod_Ciudad" required>
+                        <option>Seleccione Ciudad</option>
+                    </select>
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon">Comuna</span>
+                    <select class="form-control" name="idcomuna" id="COMUNASCod_Comuna" required>
+                        <option>Seleccione Comuna</option>
+                    </select>
+                </div>
+                <br />   
+                <div class="input-group">
+                    <span class="input-group-addon">Sucursal</span>
+                    <select class="form-control" name="idsucursal" id="SUCURSALESCod_SUCURSAL" required>
+                        <option>Seleccione Comuna</option>
+                    </select>
+                </div>
+                <br />   
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+
+    }
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#REGIONESCod_Region").change(function () {
+            CompletarListbox("CiudadesPorRegiones", "CiudadesCod_Ciudad", $("#REGIONESCod_Region").val());
+        });
+
+        $("#CiudadesCod_Ciudad").change(function () {
+            CompletarListbox("ComunasPorCiudades", "COMUNASCod_Comuna", $("#CiudadesCod_Ciudad").val());
+        });
+
+        $("#COMUNASCod_Comuna").change(function () {
+            CompletarListbox("SucursalesPorComunas", "SUCURSALESCod_SUCURSAL", $("#COMUNASCod_Comuna").val());
+        });
+    });
+
+</script>

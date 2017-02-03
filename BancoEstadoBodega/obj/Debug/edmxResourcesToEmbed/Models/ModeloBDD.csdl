@@ -192,6 +192,21 @@
       <End Role="LibroDiario" EntitySet="LibroDiario" />
     </AssociationSet>
     <EntitySet Name="ServicioMoto" EntityType="pruebatotalNewModel.ServicioMoto" />
+    <EntitySet Name="Sucursales" EntityType="pruebatotalNewModel.Sucursales" />
+    <AssociationSet Name="fk_Comuna" Association="pruebatotalNewModel.fk_Comuna">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="Sucursales" EntitySet="Sucursales" />
+    </AssociationSet>
+    <EntitySet Name="ServiEstado" EntityType="pruebatotalNewModel.ServiEstado" />
+    <EntitySet Name="sysdiagrams" EntityType="pruebatotalNewModel.sysdiagrams" />
+    <AssociationSet Name="fk_Comuna2" Association="pruebatotalNewModel.fk_Comuna2">
+      <End Role="COMUNA" EntitySet="COMUNA" />
+      <End Role="ServiEstado" EntitySet="ServiEstado" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Sucursal" Association="pruebatotalNewModel.fk_Sucursal">
+      <End Role="Sucursales" EntitySet="Sucursales" />
+      <End Role="ServiEstado" EntitySet="ServiEstado" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="BODEGA">
     <Key>
@@ -253,6 +268,8 @@
     <NavigationProperty Name="BODEGA" Relationship="pruebatotalNewModel.FK__BODEGA__IDComuna__4E88ABD4" FromRole="COMUNA" ToRole="BODEGA" />
     <NavigationProperty Name="CIUDAD" Relationship="pruebatotalNewModel.FK__COMUNA__IdCiudad__3B75D760" FromRole="COMUNA" ToRole="CIUDAD" />
     <NavigationProperty Name="CLIENTE" Relationship="pruebatotalNewModel.FK__CLIENTE__IDComun__5CD6CB2B" FromRole="COMUNA" ToRole="CLIENTE" />
+    <NavigationProperty Name="Sucursales" Relationship="pruebatotalNewModel.fk_Comuna" FromRole="COMUNA" ToRole="Sucursales" />
+    <NavigationProperty Name="ServiEstado" Relationship="pruebatotalNewModel.fk_Comuna2" FromRole="COMUNA" ToRole="ServiEstado" />
   </EntityType>
   <EntityType Name="PRODUCTO">
     <Key>
@@ -304,6 +321,7 @@
     <Property Name="IdRegion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CIUDAD" Relationship="pruebatotalNewModel.FK__CIUDAD__IdRegion__38996AB5" FromRole="REGION" ToRole="CIUDAD" />
+    <Property Name="ISO_3166_2_CL" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK__BODEGA__IDComuna__4E88ABD4">
     <End Type="pruebatotalNewModel.COMUNA" Role="COMUNA" Multiplicity="0..1" />
@@ -1193,4 +1211,78 @@
     <Property Name="PersonaRecibe" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="Sucursales">
+    <Key>
+      <PropertyRef Name="idSucursal" />
+    </Key>
+    <Property Name="idSucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Codigo" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="id_Comuna" Type="Int32" Nullable="false" />
+    <Property Name="Subgerencia" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Zona" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Categoria" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COMUNA" Relationship="pruebatotalNewModel.fk_Comuna" FromRole="Sucursales" ToRole="COMUNA" />
+    <NavigationProperty Name="ServiEstado" Relationship="pruebatotalNewModel.fk_Sucursal" FromRole="Sucursales" ToRole="ServiEstado" />
+  </EntityType>
+  <Association Name="fk_Comuna">
+    <End Type="pruebatotalNewModel.COMUNA" Role="COMUNA" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.Sucursales" Role="Sucursales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="IdComuna" />
+      </Principal>
+      <Dependent Role="Sucursales">
+        <PropertyRef Name="id_Comuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ServiEstado">
+    <Key>
+      <PropertyRef Name="idServiEstado" />
+    </Key>
+    <Property Name="idServiEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Codigo" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="idComuna" Type="Int32" Nullable="false" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="idSucursal" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="COMUNA" Relationship="pruebatotalNewModel.fk_Comuna2" FromRole="ServiEstado" ToRole="COMUNA" />
+    <NavigationProperty Name="Sucursales" Relationship="pruebatotalNewModel.fk_Sucursal" FromRole="ServiEstado" ToRole="Sucursales" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="fk_Comuna2">
+    <End Type="pruebatotalNewModel.COMUNA" Role="COMUNA" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.ServiEstado" Role="ServiEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMUNA">
+        <PropertyRef Name="IdComuna" />
+      </Principal>
+      <Dependent Role="ServiEstado">
+        <PropertyRef Name="idComuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Sucursal">
+    <End Type="pruebatotalNewModel.Sucursales" Role="Sucursales" Multiplicity="1" />
+    <End Type="pruebatotalNewModel.ServiEstado" Role="ServiEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursales">
+        <PropertyRef Name="idSucursal" />
+      </Principal>
+      <Dependent Role="ServiEstado">
+        <PropertyRef Name="idSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

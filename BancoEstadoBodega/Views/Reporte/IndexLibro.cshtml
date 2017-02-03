@@ -13,9 +13,14 @@
                     @using (Html.BeginForm("ExportToExcel", "Reporte", FormMethod.Post))
                     {
                         <p align="right">
-                            <button type="submit" name="btnExportLicensing" value="Export" id="exportLicensing" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Exportar Stock</button>
+                            <button type="submit" name="btnExportLicensing" value="Export" id="exportLicensing" class="btn btn-primary"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Generar Excel</button>
                         </p>
                     }
+                </div>
+                <div class="col-md-2 pull-right">
+                    <p align="right">
+                        <button onclick="Excel()" class="btn btn-primary"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> exportar Libro(s)</button>
+                    </p>
                 </div>
                 @if (ViewContext.HttpContext.User.IsInRole("administradores"))
                 {
@@ -82,10 +87,65 @@
     </div>
 </div>
 
+<!-- Ventana agregar producto/-->
+
+<div class="modal fade" id="ModalExportarLibro">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="@Url.Action("ResumenDeVentas", "Reporte")" enctype="multipart/form-data" method="post">
+                <div class="modal-header btn-primary">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Exportar Libro</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Fecha Inicio</span>
+                        <input type="hidden" id="fechaInicio" name="fechaInicio" value="@ViewBag.fechaInicio" />
+                        <input class="form-control" type="date" id="fechaIn" name="fechaIn" /> 
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">Fecha Fin</span>
+                        <input type="hidden" id="fechaFin" name="fechaFin" value="@ViewBag.fechaFin" />
+                        <input class="form-control" type="date" id="fechaF" name="fechaF" />     
+                    </div>
+                    <br />
+                    Tip: Para exportar solamente libros del presente mes, deje los campos de fecha vacios.
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <input type="submit" class="btn btn-primary" name="submitButton" value="Descargar Excel" />
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable();
+        $('[rel="popover"]').popover({
+            container: 'body',
+            html: true,
+            content: function () {
+                var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+                return clone;
+            }
+        }).click(function (e) {
+            e.preventDefault();
+        });
+    });
+
+    function Excel() {
+        $('#ModalExportarLibro').modal('show');
+    }
 
 
 
 
+</script>
 
 
 
@@ -144,4 +204,13 @@
         image.src = "https://pruebasmarco.blob.core.windows.net/prueba-fotos/noimage.jpg";
         return true;
     }
+</script>
+
+<script>
+    $(document).ready(function () {
+        var a = $("#fechaInicio").val();
+        var b = $("#fechaFin").val();
+        $("#fechaIn").val($("#fechaInicio").val());
+        $("#fechaF").val($("#fechaFin").val());
+    });
 </script>

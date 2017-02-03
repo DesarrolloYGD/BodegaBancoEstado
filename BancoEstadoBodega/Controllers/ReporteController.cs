@@ -165,61 +165,57 @@ namespace BancoEstadoBodega.Controllers
             return View(libro);
         }
 
-        /* public ActionResult ResumenDeVentas(string empresa, string fechaEmis, string fechaVenc, string submitButton)
+        public ActionResult ResumenDeVentas(string fechaIn, string fechaF, string submitButton)
          {
-             string EmpresaAux = "Todos";
+             /*string EmpresaAux = "Todos";
              if (!string.IsNullOrEmpty(empresa))
-                 EmpresaAux = empresa;
+                 EmpresaAux = empresa;*/
+
              string periodo = "Desde: " + "-" + " Hasta: " + "-";
-             List<LibroDiario> libros = new List<LibroDiario>();
+            List<LibroDiario> libros = db.LibroDiario.ToList();
              #region FILTROS
-             if (!string.IsNullOrEmpty(empresa))
+             if (!string.IsNullOrEmpty(fechaIn) && string.IsNullOrEmpty(fechaF))
              {
-                 empresa = empresa.Replace(".", "");
-                 libros = libros.Where(r => r.Empresas.Nombre == empresa).ToList();
-             }
-             if (!string.IsNullOrEmpty(fechaEmis) && string.IsNullOrEmpty(fechaVenc))
-             {
-                 DateTime fecha = Convert.ToDateTime(fechaEmis);
+                 DateTime fecha = Convert.ToDateTime(fechaIn);
                  libros = libros.Where(r => r.FechaSolicitud == fecha).ToList();
-                 periodo = "Desde: " + fechaEmis + " Hasta: " + "-";
+                 periodo = "Desde: " + fecha + " Hasta: " + "-";
              }
-             if (!string.IsNullOrEmpty(fechaVenc) && string.IsNullOrEmpty(fechaEmis))
+             if (!string.IsNullOrEmpty(fechaF) && string.IsNullOrEmpty(fechaIn))
              {
-                 DateTime fecha = Convert.ToDateTime(fechaVenc);
+                 DateTime fecha = Convert.ToDateTime(fechaF);
                  libros = libros.Where(r => r.FechaSolicitud == fecha).ToList();
-                 periodo = "Desde: " + "-" + " Hasta: " + fechaVenc;
+                 periodo = "Desde: " + "-" + " Hasta: " + fecha;
              }
-             if (!string.IsNullOrEmpty(fechaVenc) && !string.IsNullOrEmpty(fechaEmis))
+             if (!string.IsNullOrEmpty(fechaF) && !string.IsNullOrEmpty(fechaIn))
              {
-                 DateTime fecEmis = Convert.ToDateTime(fechaEmis);
-                 DateTime fecVenc = Convert.ToDateTime(fechaVenc);
+                 DateTime fecEmis = Convert.ToDateTime(fechaIn);
+                 DateTime fecVenc = Convert.ToDateTime(fechaF);
                  libros = libros.Where(r => r.FechaSolicitud >= fecEmis && r.FechaSolicitud <= fecVenc).ToList();
-                 periodo = "Desde: " + fechaEmis + " Hasta: " + fechaVenc;
+                 periodo = "Desde: " + fecEmis + " Hasta: " + fecVenc;
              }
-             if (string.IsNullOrEmpty(fechaVenc) && string.IsNullOrEmpty(fechaEmis))
+             if (string.IsNullOrEmpty(fechaF) && string.IsNullOrEmpty(fechaIn))
              {
                  DateTime fecEmis = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                  DateTime fecVenc = fecEmis.AddMonths(1).AddDays(-1);
                  libros = libros.Where(r => r.FechaSolicitud >= fecEmis && r.FechaSolicitud <= fecVenc).ToList();
-                 periodo = "Desde: " + fechaEmis + " Hasta: " + fechaVenc;
+                 periodo = "Desde: " + fecEmis + " Hasta: " + fecVenc;
              }
              #endregion
 
              #region CARGA DATOS INICIALES
-             string fechaEmision = string.Empty;
-             string fechaVencimiento = string.Empty;
+             string fechaInicio = string.Empty;
+             string fechaFin = string.Empty;
              string Vendedor = string.Empty;
              string Empresa = string.Empty;
 
-             if (!string.IsNullOrEmpty(fechaEmis))
+             if (!string.IsNullOrEmpty(fechaIn))
              {
-                 fechaEmision = fechaEmis;
+                fechaInicio = fechaIn;
              }
 
-             if (!string.IsNullOrEmpty(fechaVenc))
+             if (!string.IsNullOrEmpty(fechaF))
              {
-                 fechaVencimiento = fechaVenc;
+                fechaFin = fechaF;
              }
 
              #endregion
@@ -227,8 +223,8 @@ namespace BancoEstadoBodega.Controllers
              #region CALCULA TOTALES
 
              #endregion
-             ViewBag.fechaEmision = fechaEmision;
-             ViewBag.fechaVencimiento = fechaVencimiento;
+             ViewBag.fechaInicio = fechaInicio;
+             ViewBag.fechaFin = fechaFin;
 
              //DONWLOAD
              switch (submitButton)
@@ -237,13 +233,15 @@ namespace BancoEstadoBodega.Controllers
                      break;
              }
 
-             return View();
+             return View("IndexLibro");
          }
 
-         public void DownloadExcel(List<LibroDiario> libro, string periodo)
+         public void DownloadExcel(List<LibroDiario> libros, string periodo)
          {
-             List<String> empresas = libro.Select(r => r.Empresas.Nombre).Distinct().ToList();
-             List<LibroDiario> libroAux = new List<LibroDiario>();
+             List<String> empresas = libros.Select(r => r.Empresas.Nombre).Distinct().ToList();
+            var promomas = db.Empresas.Find(2);
+            string nombrepromo = promomas.Nombre; 
+            List<LibroDiario> libroAux = db.LibroDiario.ToList();
 
 
              IWorkbook workbook = new XSSFWorkbook();
@@ -263,109 +261,227 @@ namespace BancoEstadoBodega.Controllers
              fontTitulo.FontName = "Calibri";
              fontTitulo.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
 
-             foreach (string empresa in empresas)
-             {
-                 sheet1 = workbook.CreateSheet(empresa);
-                 libroAux = libro.Where(r => r.Empresas.Nombre == empresa).ToList();
+            if (empresas.Count > 0)
+            {
+                foreach (string empresa in empresas)
+                {
+                    sheet1 = workbook.CreateSheet(empresa);
+                    libroAux = libros.Where(r => r.Empresas.Nombre == empresa).ToList();
 
 
-                 IRow rowEmpresa = sheet1.CreateRow(1);
-                 rowEmpresa.CreateCell(0).SetCellValue(empresa);
-                 rowEmpresa.CreateCell(6).SetCellValue("Fecha:");
-                 rowEmpresa.CreateCell(7).SetCellValue(DateTime.Now.ToString("dd/MM/yyyy"));
+                    IRow rowEmpresa = sheet1.CreateRow(1);
+                    rowEmpresa.CreateCell(0).SetCellValue(empresa);
+                    rowEmpresa.CreateCell(6).SetCellValue("Fecha:");
+                    rowEmpresa.CreateCell(7).SetCellValue(DateTime.Now.ToString("dd/MM/yyyy"));
 
 
-                 IRow rowTitulo = sheet1.CreateRow(6);
-                 rowTitulo.CreateCell(3).SetCellValue("Libro De Ventas");
-                 rowTitulo.GetCell(3).CellStyle.SetFont(fontTitulo);
+                    IRow rowTitulo = sheet1.CreateRow(6);
+                    rowTitulo.CreateCell(3).SetCellValue("Libro De Ventas");
+                    rowTitulo.GetCell(3).CellStyle.SetFont(fontTitulo);
 
-                 IRow rowPeriodo = sheet1.CreateRow(7);
-                 rowPeriodo = sheet1.CreateRow(8);
-                 rowPeriodo.CreateCell(0).SetCellValue(periodo);
+                    IRow rowPeriodo = sheet1.CreateRow(7);
+                    rowPeriodo = sheet1.CreateRow(8);
+                    rowPeriodo.CreateCell(0).SetCellValue(periodo);
 
-                 IRow rowCol1 = sheet1.CreateRow(10);
-                 rowCol1.CreateCell(0).SetCellValue("Encomienda");
-                 rowCol1.CreateCell(1).SetCellValue("Empaque");
-                 rowCol1.CreateCell(2).SetCellValue("Origen");
-                 rowCol1.CreateCell(3).SetCellValue("Forma de despacho");
-                 rowCol1.CreateCell(4).SetCellValue("Camioneta/Moto");
-                 rowCol1.CreateCell(5).SetCellValue("Valija Interna");
-                 rowCol1.CreateCell(6).SetCellValue("Destino");
-                 rowCol1.CreateCell(7).SetCellValue("Comuna");
-                 rowCol1.CreateCell(8).SetCellValue("Fecha Solicitud");
-                 rowCol1.CreateCell(9).SetCellValue("Fecha Entrega");
-                 rowCol1.CreateCell(10).SetCellValue("Seguimiento");
-                 rowCol1.CreateCell(11).SetCellValue("Clasificacion");
-                 rowCol1.CreateCell(12).SetCellValue("Descripcion de la entrega");
-                 rowCol1.CreateCell(13).SetCellValue("Area Mandante");
-                 rowCol1.CreateCell(14).SetCellValue("Usuario Mandante");
-                 rowCol1.CreateCell(15).SetCellValue("Usuario Receptor");
-                 rowCol1.CreateCell(16).SetCellValue("Bultos");
-                 rowCol1.CreateCell(17).SetCellValue("Observaciones");
-                 rowCol1.CreateCell(18).SetCellValue("Coste Unitario");
-                 rowCol1.CreateCell(19).SetCellValue("Servicio Mecanizado");
-                 rowCol1.CreateCell(20).SetCellValue("SubTotal");
+                    IRow rowCol1 = sheet1.CreateRow(18);
+                    rowCol1.CreateCell(0).SetCellValue("Encomienda");
+                    rowCol1.CreateCell(1).SetCellValue("Empaque");
+                    rowCol1.CreateCell(2).SetCellValue("Origen");
+                    rowCol1.CreateCell(3).SetCellValue("Forma de despacho");
+                    rowCol1.CreateCell(4).SetCellValue("Camioneta/Moto");
+                    rowCol1.CreateCell(5).SetCellValue("Valija Interna");
+                    rowCol1.CreateCell(6).SetCellValue("Destino");
+                    rowCol1.CreateCell(7).SetCellValue("Comuna");
+                    rowCol1.CreateCell(8).SetCellValue("Fecha Solicitud");
+                    rowCol1.CreateCell(9).SetCellValue("Fecha Entrega");
+                    rowCol1.CreateCell(10).SetCellValue("Seguimiento");
+                    rowCol1.CreateCell(11).SetCellValue("Clasificacion");
+                    rowCol1.CreateCell(12).SetCellValue("Descripcion de la entrega");
+                    rowCol1.CreateCell(13).SetCellValue("Area Mandante");
+                    rowCol1.CreateCell(14).SetCellValue("Usuario Mandante");
+                    rowCol1.CreateCell(15).SetCellValue("Usuario Receptor");
+                    rowCol1.CreateCell(16).SetCellValue("Bultos");
+                    rowCol1.CreateCell(17).SetCellValue("Observaciones");
+                    rowCol1.CreateCell(18).SetCellValue("Coste Despacho");
+                    rowCol1.CreateCell(19).SetCellValue("Servicio Mecanizado");
+                    rowCol1.CreateCell(20).SetCellValue("Meca X Bultos");
 
-                 int cantidadRegistros = libroAux.Count + 20;
+                    int cantidadRegistros = libroAux.Count + 20;
 
-                 #region FACTURAS
-                 if (libroAux.Count > 0)
-                 {
-                     for (int i = 20; i < cantidadRegistros; i++)
-                     {
-                         IRow row = sheet1.CreateRow(i);
-                         row.CreateCell(0).SetCellValue(libroAux[i - 20].TipoEncomienda.tipoEncomienda1);
-                         row.CreateCell(1).SetCellValue(libroAux[i - 20].TipoEmpaque.descripcion);
-                         row.CreateCell(2).SetCellValue(libroAux[i - 20].Empresas.Nombre);
-                         row.CreateCell(3).SetCellValue(libroAux[i - 20].TipoDespacho.descripcion);
-                         row.CreateCell(4).SetCellValue(libroAux[i - 20].TrasladoDespacho.descripcion);
-                         row.CreateCell(5).SetCellValue(libroAux[i - 20].ValijaInterna.Nombre);
-                         row.CreateCell(6).SetCellValue(libroAux[i - 20].Destino);
-                         row.CreateCell(7).SetCellValue(libroAux[i - 20].Comuna);
-                         row.CreateCell(8).SetCellValue(libroAux[i - 20].FechaSolicitud.ToString("dd/MM/yyyy"));
-                         row.CreateCell(9).SetCellValue(libroAux[i - 20].FechaEntrega.ToString("dd/MM/yyyy"));
-                         row.CreateCell(10).SetCellValue(libroAux[i - 20].CodigoSeguimiento);
-                         row.CreateCell(11).SetCellValue(libroAux[i - 20].TipoCampaña.Nombre);
-                         row.CreateCell(12).SetCellValue(libroAux[i - 20].CampañaObs);
-                         row.CreateCell(13).SetCellValue(libroAux[i - 20].Area.nombre);
-                         row.CreateCell(14).SetCellValue(libroAux[i - 20].Mandante);
-                         row.CreateCell(15).SetCellValue(libroAux[i - 20].Receptor);
-                         row.CreateCell(16).SetCellValue(libroAux[i - 20].Bultos);
-                         row.CreateCell(17).SetCellValue(libroAux[i - 20].Obs);
-                         row.CreateCell(18).SetCellValue(libroAux[i - 20].CosteUnitario.Value);
-                         row.CreateCell(19).SetCellValue(libroAux[i - 20].Mecanizado.Descripcion);
-                         row.CreateCell(20).SetCellValue(libroAux[i - 20].SubTotal.Value); 
-                     }
+                    #region FACTURAS
+                    if (libroAux.Count > 0)
+                    {
+                        for (int i = 20; i < cantidadRegistros; i++)
+                        {
+                            var mecaxbultos = libroAux[i - 20].costeMeca * libroAux[i - 20].Bultos;
+                            IRow row = sheet1.CreateRow(i);
+                            row.CreateCell(0).SetCellValue(libroAux[i - 20].TipoEncomienda.tipoEncomienda);
+                            row.CreateCell(1).SetCellValue(libroAux[i - 20].TipoEmpaque.descripcion);
+                            row.CreateCell(2).SetCellValue(libroAux[i - 20].Empresas.Nombre);
+                            row.CreateCell(3).SetCellValue(libroAux[i - 20].TipoDespacho.descripcion);
+                            row.CreateCell(4).SetCellValue(libroAux[i - 20].TrasladoDespacho.descripcion);
+                            row.CreateCell(5).SetCellValue(libroAux[i - 20].ValijaInterna.Nombre);
+                            row.CreateCell(6).SetCellValue(libroAux[i - 20].Destino);
+                            row.CreateCell(7).SetCellValue(libroAux[i - 20].Comuna);
+                            row.CreateCell(8).SetCellValue(libroAux[i - 20].FechaSolicitud.ToString("dd/MM/yyyy"));
+                            row.CreateCell(9).SetCellValue(libroAux[i - 20].FechaEntrega.ToString("dd/MM/yyyy"));
+                            row.CreateCell(10).SetCellValue(libroAux[i - 20].CodigoSeguimiento);
+                            row.CreateCell(11).SetCellValue(libroAux[i - 20].TipoCampaña.Nombre);
+                            row.CreateCell(12).SetCellValue(libroAux[i - 20].CampañaObs);
+                            row.CreateCell(13).SetCellValue(libroAux[i - 20].Area.nombre);
+                            row.CreateCell(14).SetCellValue(libroAux[i - 20].Mandante);
+                            row.CreateCell(15).SetCellValue(libroAux[i - 20].Receptor);
+                            row.CreateCell(16).SetCellValue(libroAux[i - 20].Bultos);
+                            row.CreateCell(17).SetCellValue(libroAux[i - 20].Obs);
+                            row.CreateCell(18).SetCellValue(libroAux[i - 20].costedespacho.Value);
+                            row.CreateCell(19).SetCellValue(libroAux[i - 20].Mecanizado.Descripcion);
+                            row.CreateCell(20).SetCellValue((double)mecaxbultos);
+                        }
 
 
-                 }
+                    }
+                    else
+                    {
+                        IRow row = sheet1.CreateRow(20);
+                        row.CreateCell(10).SetCellValue("no se Registran Libros en este rango de fecha");
+                    }
 
-                 #endregion
+                    #endregion
 
-                 #region Ajustes de largo
-                 sheet1.AutoSizeColumn((short)1);
-                 sheet1.AutoSizeColumn((short)2);
-                 sheet1.AutoSizeColumn((short)3);
-                 sheet1.AutoSizeColumn((short)4);
-                 sheet1.AutoSizeColumn((short)5);
-                 sheet1.AutoSizeColumn((short)6);
-                 sheet1.AutoSizeColumn((short)7);
-                 sheet1.AutoSizeColumn((short)8);
-                 sheet1.AutoSizeColumn((short)9);
-                 sheet1.AutoSizeColumn((short)10);
-                 sheet1.AutoSizeColumn((short)11);
-                 sheet1.AutoSizeColumn((short)12);
-                 sheet1.AutoSizeColumn((short)13);
-                 sheet1.AutoSizeColumn((short)14);
-                 sheet1.AutoSizeColumn((short)15);
-                 sheet1.AutoSizeColumn((short)16);
-                 sheet1.AutoSizeColumn((short)17);
-                 sheet1.AutoSizeColumn((short)18);
-                 sheet1.AutoSizeColumn((short)19);
-                 sheet1.AutoSizeColumn((short)20);
+                    #region Ajustes de largo
+                    sheet1.AutoSizeColumn((short)1);
+                    sheet1.AutoSizeColumn((short)2);
+                    sheet1.AutoSizeColumn((short)3);
+                    sheet1.AutoSizeColumn((short)4);
+                    sheet1.AutoSizeColumn((short)5);
+                    sheet1.AutoSizeColumn((short)6);
+                    sheet1.AutoSizeColumn((short)7);
+                    sheet1.AutoSizeColumn((short)8);
+                    sheet1.AutoSizeColumn((short)9);
+                    sheet1.AutoSizeColumn((short)10);
+                    sheet1.AutoSizeColumn((short)11);
+                    sheet1.AutoSizeColumn((short)12);
+                    sheet1.AutoSizeColumn((short)13);
+                    sheet1.AutoSizeColumn((short)14);
+                    sheet1.AutoSizeColumn((short)15);
+                    sheet1.AutoSizeColumn((short)16);
+                    sheet1.AutoSizeColumn((short)17);
+                    sheet1.AutoSizeColumn((short)18);
+                    sheet1.AutoSizeColumn((short)19);
+                    sheet1.AutoSizeColumn((short)20);
 
-                 #endregion
-             }
+                    #endregion
+                }
+            }
+            else
+            {
+                sheet1 = workbook.CreateSheet(nombrepromo);
+                libroAux = libros.Where(r => r.Empresas.Nombre == nombrepromo).ToList();
+
+
+                IRow rowEmpresa = sheet1.CreateRow(1);
+                rowEmpresa.CreateCell(0).SetCellValue(nombrepromo);
+                rowEmpresa.CreateCell(6).SetCellValue("Fecha:");
+                rowEmpresa.CreateCell(7).SetCellValue(DateTime.Now.ToString("dd/MM/yyyy"));
+
+
+                IRow rowTitulo = sheet1.CreateRow(6);
+                rowTitulo.CreateCell(3).SetCellValue("Libro De Ventas");
+                rowTitulo.GetCell(3).CellStyle.SetFont(fontTitulo);
+
+                IRow rowPeriodo = sheet1.CreateRow(7);
+                rowPeriodo = sheet1.CreateRow(8);
+                rowPeriodo.CreateCell(0).SetCellValue(periodo);
+
+                IRow rowCol1 = sheet1.CreateRow(18);
+                rowCol1.CreateCell(0).SetCellValue("Encomienda");
+                rowCol1.CreateCell(1).SetCellValue("Empaque");
+                rowCol1.CreateCell(2).SetCellValue("Origen");
+                rowCol1.CreateCell(3).SetCellValue("Forma de despacho");
+                rowCol1.CreateCell(4).SetCellValue("Camioneta/Moto");
+                rowCol1.CreateCell(5).SetCellValue("Valija Interna");
+                rowCol1.CreateCell(6).SetCellValue("Destino");
+                rowCol1.CreateCell(7).SetCellValue("Comuna");
+                rowCol1.CreateCell(8).SetCellValue("Fecha Solicitud");
+                rowCol1.CreateCell(9).SetCellValue("Fecha Entrega");
+                rowCol1.CreateCell(10).SetCellValue("Seguimiento");
+                rowCol1.CreateCell(11).SetCellValue("Clasificacion");
+                rowCol1.CreateCell(12).SetCellValue("Descripcion de la entrega");
+                rowCol1.CreateCell(13).SetCellValue("Area Mandante");
+                rowCol1.CreateCell(14).SetCellValue("Usuario Mandante");
+                rowCol1.CreateCell(15).SetCellValue("Usuario Receptor");
+                rowCol1.CreateCell(16).SetCellValue("Bultos");
+                rowCol1.CreateCell(17).SetCellValue("Observaciones");
+                rowCol1.CreateCell(18).SetCellValue("Coste Despacho");
+                rowCol1.CreateCell(19).SetCellValue("Servicio Mecanizado");
+                rowCol1.CreateCell(20).SetCellValue("Meca X Bultos");
+
+                int cantidadRegistros = libroAux.Count + 20;
+
+                #region FACTURAS
+                if (libroAux.Count > 0)
+                {
+                    for (int i = 20; i < cantidadRegistros; i++)
+                    {
+                        var mecaxbultos = libroAux[i - 20].costeMeca * libroAux[i - 20].Bultos;
+                        IRow row = sheet1.CreateRow(i);
+                        row.CreateCell(0).SetCellValue(libroAux[i - 20].TipoEncomienda.tipoEncomienda);
+                        row.CreateCell(1).SetCellValue(libroAux[i - 20].TipoEmpaque.descripcion);
+                        row.CreateCell(2).SetCellValue(libroAux[i - 20].Empresas.Nombre);
+                        row.CreateCell(3).SetCellValue(libroAux[i - 20].TipoDespacho.descripcion);
+                        row.CreateCell(4).SetCellValue(libroAux[i - 20].TrasladoDespacho.descripcion);
+                        row.CreateCell(5).SetCellValue(libroAux[i - 20].ValijaInterna.Nombre);
+                        row.CreateCell(6).SetCellValue(libroAux[i - 20].Destino);
+                        row.CreateCell(7).SetCellValue(libroAux[i - 20].Comuna);
+                        row.CreateCell(8).SetCellValue(libroAux[i - 20].FechaSolicitud.ToString("dd/MM/yyyy"));
+                        row.CreateCell(9).SetCellValue(libroAux[i - 20].FechaEntrega.ToString("dd/MM/yyyy"));
+                        row.CreateCell(10).SetCellValue(libroAux[i - 20].CodigoSeguimiento);
+                        row.CreateCell(11).SetCellValue(libroAux[i - 20].TipoCampaña.Nombre);
+                        row.CreateCell(12).SetCellValue(libroAux[i - 20].CampañaObs);
+                        row.CreateCell(13).SetCellValue(libroAux[i - 20].Area.nombre);
+                        row.CreateCell(14).SetCellValue(libroAux[i - 20].Mandante);
+                        row.CreateCell(15).SetCellValue(libroAux[i - 20].Receptor);
+                        row.CreateCell(16).SetCellValue(libroAux[i - 20].Bultos);
+                        row.CreateCell(17).SetCellValue(libroAux[i - 20].Obs);
+                        row.CreateCell(18).SetCellValue(libroAux[i - 20].costedespacho.Value);
+                        row.CreateCell(19).SetCellValue(libroAux[i - 20].Mecanizado.Descripcion);
+                        row.CreateCell(20).SetCellValue((double)mecaxbultos);
+                    }
+
+
+                }
+                else
+                {
+                    IRow row = sheet1.CreateRow(20);
+                    row.CreateCell(10).SetCellValue("no se Registran Libros en este rango de fecha");
+                }
+
+                #endregion
+
+                #region Ajustes de largo
+                sheet1.AutoSizeColumn((short)1);
+                sheet1.AutoSizeColumn((short)2);
+                sheet1.AutoSizeColumn((short)3);
+                sheet1.AutoSizeColumn((short)4);
+                sheet1.AutoSizeColumn((short)5);
+                sheet1.AutoSizeColumn((short)6);
+                sheet1.AutoSizeColumn((short)7);
+                sheet1.AutoSizeColumn((short)8);
+                sheet1.AutoSizeColumn((short)9);
+                sheet1.AutoSizeColumn((short)10);
+                sheet1.AutoSizeColumn((short)11);
+                sheet1.AutoSizeColumn((short)12);
+                sheet1.AutoSizeColumn((short)13);
+                sheet1.AutoSizeColumn((short)14);
+                sheet1.AutoSizeColumn((short)15);
+                sheet1.AutoSizeColumn((short)16);
+                sheet1.AutoSizeColumn((short)17);
+                sheet1.AutoSizeColumn((short)18);
+                sheet1.AutoSizeColumn((short)19);
+                sheet1.AutoSizeColumn((short)20);
+
+                #endregion
+            }
 
              string tura = this.Server.MapPath("~/Upload/");
              FileStream sw = System.IO.File.Create(tura + "LibroDiario.xlsx");
@@ -379,7 +495,7 @@ namespace BancoEstadoBodega.Controllers
              Response.End();
 
          }
-         */
+
         // GET: Reporte/Create
         public ActionResult Create()
         {

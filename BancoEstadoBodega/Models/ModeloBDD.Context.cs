@@ -63,6 +63,9 @@ namespace BancoEstadoBodega.Models
         public virtual DbSet<ValijaInterna> ValijaInterna { get; set; }
         public virtual DbSet<LibroDiario> LibroDiario { get; set; }
         public virtual DbSet<ServicioMoto> ServicioMoto { get; set; }
+        public virtual DbSet<Sucursales> Sucursales { get; set; }
+        public virtual DbSet<ServiEstado> ServiEstado { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual ObjectResult<sp_obtenerDistribucion_Result> sp_obtenerDistribucion()
         {

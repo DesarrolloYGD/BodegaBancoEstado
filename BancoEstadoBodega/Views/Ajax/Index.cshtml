@@ -1,0 +1,32 @@
+﻿@model BancoEstadoBodega.Models.PruebaCascadaViewModel
+
+@using (Html.BeginForm("CiudadList", "Ajax", FormMethod.Post, new { @id = "regionForm" }))
+{
+    <p>
+        @Html.LabelFor(x => x.RegionId)
+        @Html.DropDownListFor(x => x.RegionId, Model.RegionList, "Seleccione Región")
+    </p>
+}
+
+@using (Html.BeginForm("ComunaList", "Ajax", FormMethod.Post, new { @id = "ciudadForm" }))
+{
+    @Html.HiddenFor(x => x.RegionId)
+    <p>
+        @Html.LabelFor(x => x.CiudadId)
+        @Html.DropDownListFor(x => x.CiudadId, Model.CiudadList, "Seleccione Ciudad")
+    </p>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#RegionId").change(function () {
+                $("regionForm").submit();
+            });
+
+            $("#TerritoryId").change(function () {
+                $("territoryForm").submit();
+            });
+        });
+    </script>
+}

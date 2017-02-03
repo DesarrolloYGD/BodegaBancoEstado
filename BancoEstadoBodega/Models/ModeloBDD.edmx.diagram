@@ -79,6 +79,12 @@
         <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__125EB334" />
         <AssociationConnector Association="pruebatotalNewModel.FK__LibroDiar__id_Ti__1352D76D" />
         <EntityTypeShape EntityType="pruebatotalNewModel.ServicioMoto" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.Sucursales" Width="1.5" PointX="7.5" PointY="19.25" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Comuna" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.ServiEstado" Width="1.5" PointX="17.75" PointY="10.625" />
+        <EntityTypeShape EntityType="pruebatotalNewModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="15.75" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Comuna2" />
+        <AssociationConnector Association="pruebatotalNewModel.fk_Sucursal" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

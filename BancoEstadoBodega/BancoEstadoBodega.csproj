@@ -233,6 +233,8 @@
     <Compile Include="BlobService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministracionController.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\CampañaController.cs" />
     <Compile Include="Controllers\ExportExcelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -261,6 +263,7 @@
     <Compile Include="Models\BODEGA.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CampañaViewModel.cs" />
     <Compile Include="Models\Cargo.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
@@ -343,10 +346,14 @@
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductoViewModel.cs" />
+    <Compile Include="Models\PruebaCascadaViewModel.cs" />
     <Compile Include="Models\REGION.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ServicioMoto.cs">
+      <DependentUpon>ModeloBDD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ServiEstado.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Solicitud.cs">
@@ -365,6 +372,12 @@
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Stock.cs">
+      <DependentUpon>ModeloBDD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sucursales.cs">
+      <DependentUpon>ModeloBDD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoCampaña.cs">
@@ -682,6 +695,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\propios.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -755,6 +769,10 @@
     <Content Include="Views\Administracion\IndexMoto.cshtml" />
     <Content Include="Views\Administracion\DetalleMoto.cshtml" />
     <Content Include="Views\Reporte\DetalleLibro.cshtml" />
+    <Content Include="Views\Administracion\Prueba.cshtml" />
+    <Content Include="Views\Ajax\Index.cshtml" />
+    <Content Include="Views\Campaña\Index.cshtml" />
+    <Content Include="Views\Campaña\Datos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
