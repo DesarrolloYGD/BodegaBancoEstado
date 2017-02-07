@@ -20,7 +20,7 @@ using System.Web.UI;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Xml;
-
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BancoEstadoBodega.Controllers
 {
@@ -58,6 +58,82 @@ namespace BancoEstadoBodega.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult IndexLibro2(int? EmpresaSeleccionada, string fechaIn, string fechaF, string submitButton)
+
+        {
+            var model = new LibroDiarioViewModel();
+            model.Empresas = db.Empresas.OrderBy(p => p.Nombre).ToList().Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Nombre }).ToList();
+            model.Libros = db.LibroDiario.ToList();//se llena la lista de libros almacenada en el view model
+            string periodo = "Desde: " + "-" + " Hasta: " + "-";
+            #region Filtros
+            //filtrar por empresa
+            if (EmpresaSeleccionada != null)
+            {
+                model.Libros = model.Libros.Where(x => x.id_Empresa == EmpresaSeleccionada).ToList();
+            }
+            if (!string.IsNullOrEmpty(fechaIn) && string.IsNullOrEmpty(fechaF))
+            {
+                DateTime fecha = Convert.ToDateTime(fechaIn);
+                model.Libros = model.Libros.Where(r => r.FechaEntrega == fecha).ToList();
+                periodo = "Desde: " + fecha + " Hasta: " + "-";
+            }
+            if (!string.IsNullOrEmpty(fechaF) && string.IsNullOrEmpty(fechaIn))
+            {
+                DateTime fecha = Convert.ToDateTime(fechaF);
+                model.Libros = model.Libros.Where(r => r.FechaEntrega == fecha).ToList();
+                periodo = "Desde: " + "-" + " Hasta: " + fecha;
+            }
+            if (!string.IsNullOrEmpty(fechaF) && !string.IsNullOrEmpty(fechaIn))
+            {
+                DateTime fecEmis = Convert.ToDateTime(fechaIn);
+                DateTime fecVenc = Convert.ToDateTime(fechaF);
+                model.Libros = model.Libros.Where(r => r.FechaEntrega >= fecEmis && r.FechaEntrega <= fecVenc).ToList();
+                periodo = "Desde: " + fecEmis + " Hasta: " + fecVenc;
+            }
+            if (string.IsNullOrEmpty(fechaF) && string.IsNullOrEmpty(fechaIn))
+            {
+                DateTime fecEmis = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime fecVenc = fecEmis.AddMonths(1).AddDays(-1);
+                model.Libros = model.Libros.Where(r => r.FechaEntrega >= fecEmis && r.FechaEntrega <= fecVenc).ToList();
+                periodo = "Desde: " + fecEmis + " Hasta: " + fecVenc;
+            }
+            #endregion
+
+                 #region CARGA DATOS INICIALES
+             string fechaInicio = string.Empty;
+             string fechaFin = string.Empty;
+             string Vendedor = string.Empty;
+             string Empresa = string.Empty;
+
+             if (!string.IsNullOrEmpty(fechaIn))
+             {
+                fechaInicio = fechaIn;
+             }
+
+             if (!string.IsNullOrEmpty(fechaF))
+             {
+                fechaFin = fechaF;
+             }
+
+             #endregion
+
+             #region CALCULA TOTALES
+
+             #endregion
+             ViewBag.fechaInicio = fechaInicio;
+             ViewBag.fechaFin = fechaFin;
+
+             //DONWLOAD
+             switch (submitButton)
+             {
+                 case "Descargar Excel": DownloadExcel(model.Libros, periodo);
+                     break;
+             }
+
+             return View("IndexLibro2", model);
         }
 
         public ActionResult IndexLibro(int? IDTipoEmpaque, int? IDEmpresas, int? IDTraslado, int? IDValija, int? IDTipoCampaña, int? IDArea, int? IDMeca, int? IDTipoDespacho)
@@ -233,7 +309,7 @@ namespace BancoEstadoBodega.Controllers
                      break;
              }
 
-             return View("IndexLibro");
+             return View("IndexLibro2");
          }
 
          public void DownloadExcel(List<LibroDiario> libros, string periodo)

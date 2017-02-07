@@ -1,0 +1,67 @@
+﻿@model BancoEstadoBodega.Models.CampañaViewModel
+
+
+
+<div class="input-group">
+    <span class="input-group-addon">Nombre Campaña</span>
+    <input type="text" class="form-control" name="Nombre" placeholder="Nombre" maxlength="100" required>
+</div><br />
+
+
+<a href="@Url.Action("Matriz", "Campaña")" class="btn btn-warning">
+    Generar Matríz
+    <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+</a>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Pago_Arriendo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2" for="nombreCampa_a">Bancas</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBox("checkBE")
+                    <label> Banco Estado</label>&nbsp;&nbsp;
+                </div>
+                <div class="checkbox">
+                    @Html.CheckBox("checkSE")
+                    <label> Servi Estado</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombreCampaña, "Nombre de la Campaña", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nombreCampaña, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombreCampaña, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Productos, "Lista de Productos", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.Productos,Model.Productos, new { @class = "form-control", @style = "width: 600px; height: 500px;" })
+                @Html.ValidationMessageFor(model => model.nombreCampaña, "", new { @class = "text-danger" })
+            </div>
+        </div>
+     
+        <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-danger">
+            Volver
+            <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>,
+        </a>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-forward">Generar Matriz</i>
+                </button>
+            </div>
+        </div>
+    </div>
+}

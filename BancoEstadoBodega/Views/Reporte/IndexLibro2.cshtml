@@ -1,10 +1,5 @@
-﻿@model IEnumerable<BancoEstadoBodega.Models.LibroDiario>
-@{
-    ViewBag.Title = "LibroDiario";
-}
+﻿@model BancoEstadoBodega.Models.LibroDiarioViewModel
 
-
-<!-- Seccion que muestra la lista de productos -->
 <div class="row">
     <div class="col-md-12">
         <div class="container-fluid">
@@ -32,14 +27,25 @@
             <div class="panel-body">
                 @if (ViewContext.HttpContext.User.IsInRole("administradores"))
                 {
-                    <form action="@Url.Action("IndexLibro", "Reporte")" enctype="multipart/form-data" method="post" class="form-inline">
+                    <form action="@Url.Action("IndexLibro2", "Reporte")" enctype="multipart/form-data" method="post" class="form-inline">
 
                         <div class="form-group">
                             <label for="IDEmpresa">Empresa</label>
-                            @Html.DropDownList("IDEmpresas", null, "Todos", htmlAttributes: new { @class = "form-control input-sm" })
+                            @Html.DropDownListFor(x => x.EmpresaSeleccionada, Model.Empresas,"Todos", htmlAttributes: new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaIn">Fecha Inicio</label>
+                            <input type="hidden" id="fechaInicio" name="fechaInicio" value="@ViewBag.fechaInicio" />
+                            <input class="form-control" type="date" id="fechaIn" name="fechaIn" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaF">Fecha Fin</label>
+                            <input type="hidden" id="fechaFin" name="fechaFin" value="@ViewBag.fechaFin" />
+                            <input class="form-control" type="date" id="fechaF" name="fechaF" />
                         </div>
 
-                        <button type="submit" class="btn btn-default btn-sm">Filtrar</button>
+                        <input type="submit" name="submitButton" value="Buscar" class="btn btn-default btn-sm">
+                        <input type="submit" name="submitButton" value="Descargar Excel" class="btn btn-default btn-sm">
                     </form>
                 }
 
@@ -51,18 +57,20 @@
                                 <th>Empaque</th>
                                 <th>Despacho</th>
                                 <th>Destino</th>
+                                <th>Fecha Entrega</th>
                                 <th>Mandante</th>
                                 <th>Detalle</th>
                             </tr>
-                            
+
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Libros)
                             {
                                 <tr>
                                     <td> @item.TipoEmpaque.descripcion</td>
                                     <td> @item.TipoDespacho.descripcion</td>
                                     <td> @item.Destino</td>
+                                    <td> @item.FechaEntrega</td>
                                     <td> @item.Mandante </td>
                                     <td class="text-center">
                                         <a class="btn btn-success btn-xs" title="Detalles" href="../../Reporte/DetalleLibro/@item.ID"> <span class="glyphicon glyphicon-folder-open"></span>Ver mas</a>
@@ -80,41 +88,6 @@
         </div>
     </div>
 </div>
-
-<!-- Ventana agregar producto/-->
-
-<div class="modal fade" id="ModalExportarLibro">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="@Url.Action("ResumenDeVentas", "Reporte")" enctype="multipart/form-data" method="post">
-                <div class="modal-header btn-primary">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Exportar Libro</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">Fecha Inicio</span>
-                        <input type="hidden" id="fechaInicio" name="fechaInicio" value="@ViewBag.fechaInicio" />
-                        <input class="form-control" type="date" id="fechaIn" name="fechaIn" /> 
-                    </div>
-                    <br />
-                    <div class="input-group">
-                        <span class="input-group-addon">Fecha Fin</span>
-                        <input type="hidden" id="fechaFin" name="fechaFin" value="@ViewBag.fechaFin" />
-                        <input class="form-control" type="date" id="fechaF" name="fechaF" />     
-                    </div>
-                    <br />
-                    Tip: Para exportar solamente libros del presente mes, deje los campos de fecha vacios.
-                    <br />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <input type="submit" class="btn btn-primary" name="submitButton" value="Descargar Excel" />
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
 <script type="text/javascript">
@@ -134,69 +107,6 @@
 
     function Excel() {
         $('#ModalExportarLibro').modal('show');
-    }
-
-
-
-
-</script>
-
-
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#example').DataTable();
-        $('[rel="popover"]').popover({
-            container: 'body',
-            html: true,
-            content: function () {
-                var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
-                return clone;
-            }
-        }).click(function (e) {
-            e.preventDefault();
-        });
-    });
-
-    function AgregarNuevo() {
-        $('#modalCrearCategoria').modal('show');
-    }
-
-
-
-
-</script>
-
-<script>
-    $(document).ready(function () {
-        var a = $("#fechaEmision").val();
-        var b = $("#fechaVencimiento").val();
-        $("#fechaEmis").val($("#fechaEmision").val());
-        $("#fechaVenc").val($("#fechaVencimiento").val());
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        /* Valida el tamaño maximo de un archivo adjunto */
-        $('.input-file').change(function () {
-            var sizeByte = this.files[0].size;
-            var siezekiloByte = parseInt(sizeByte / 1024);
-
-            if (siezekiloByte > 300) {
-                alert('El tamaño supera el limite permitido (300kb)');
-                $(this).val('');
-            }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    function imgError(image) {
-        image.onerror = "";
-        image.src = "https://pruebasmarco.blob.core.windows.net/prueba-fotos/noimage.jpg";
-        return true;
     }
 </script>
 

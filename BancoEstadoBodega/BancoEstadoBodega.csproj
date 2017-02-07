@@ -299,6 +299,7 @@
     <Compile Include="Models\LibroDiario.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LibroDiarioViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mecanizado.cs">
       <DependentUpon>ModeloBDD.tt</DependentUpon>
@@ -773,6 +774,7 @@
     <Content Include="Views\Campaña\Index.cshtml" />
     <Content Include="Views\Campaña\Datos.cshtml" />
     <Content Include="Views\Reporte\EditarLibro.cshtml" />
+    <Content Include="Views\Reporte\IndexLibro2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -786,6 +788,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

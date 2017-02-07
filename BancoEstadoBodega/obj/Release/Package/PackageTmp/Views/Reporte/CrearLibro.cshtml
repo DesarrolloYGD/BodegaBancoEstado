@@ -12,19 +12,19 @@
         <div class="modal-body">
             <div class="input-group">
                     <span class="input-group-addon">Tipo Encomienda</span>
-                    @Html.DropDownList("id_TipoEncomienda", null,"Seleccione", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("id_TipoEncomienda", null,"Seleccione", htmlAttributes: new { @class = "form-control", required="required" })
                     @Html.ValidationMessageFor(model => model.id_TipoEncomienda, "", new { @class = "text-danger" })
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Tipo Empaque</span>
-                @Html.DropDownList("id_TipoEmpaque", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("id_TipoEmpaque", null,"Seleccione", htmlAttributes: new { @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.id_TipoEmpaque, "", new { @class = "text-danger" })
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Origen</span>
-                @Html.DropDownList("id_Empresa", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("id_Empresa", null,"Selecccione", htmlAttributes: new { @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.id_Empresa, "", new { @class = "text-danger" })
             </div>
             <br />
@@ -43,6 +43,7 @@
             <div class="input-group">
                 <span class="input-group-addon">Dirección</span>
                 <input type="text" class="form-control" name="Destino" placeholder="Destino" required>
+                @Html.ValidationMessageFor(model => model.Destino, "", new { @class = "text-danger" })
             </div>
             <br />
             <div class="input-group">
@@ -52,18 +53,18 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Fecha Solicitud</span>
-                <input type="date" class="form-control" name="FechaSolicitud" placeholder="Fecha">
+                <input type="date" class="form-control" name="FechaSolicitud" id="FechaSolicitud" placeholder="Fecha" required>
                 
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Fecha Entrega</span>
-                <input type="date" class="form-control" name="FechaEntrega" placeholder="Fecha">
+                <input type="date" class="form-control" name="FechaEntrega" id="FechaEntrega" placeholder="Fecha" required>
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Seguimiento</span>
-                <input type="text" class="form-control" name="CodigoSeguimiento" placeholder="Destino" required>
+                <input type="text" class="form-control" name="CodigoSeguimiento" placeholder="Codigo de seguimiento" required>
             </div>
             <br />
             <div class="input-group">
@@ -74,7 +75,7 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Descripcion Entrega</span>
-                <input type="text" class="form-control" name="CampañaObs" placeholder="Destino" required>
+                <input type="text" class="form-control" name="CampañaObs" placeholder="Observacion sobre la entrega" required>
             </div>
             <br />
             <div class="input-group">
@@ -85,18 +86,18 @@
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Mandante</span>
-                <input type="text" class="form-control" name="Mandante" placeholder="Destino" required>
+                <input type="text" class="form-control" name="Mandante" placeholder="Usuario Mandante" required>
             </div>
             <br />
             <div class="input-group">
                 <span class="input-group-addon">Receptor</span>
-                <input type="text" class="form-control" name="Receptor" placeholder="Destino" required>
+                <input type="text" class="form-control" name="Receptor" placeholder="Usuario Receptor" required>
             </div>
             <br />
 
             <div class="input-group">
                 <span class="input-group-addon">Bultos</span>
-                <input type="text" class="form-control" name="Bultos" placeholder="Destino" required>
+                <input type="number" class="form-control" name="Bultos" placeholder="Cantidad de bultos" required>
             </div>
             <br />
             <div class="input-group">
@@ -111,10 +112,11 @@
                 @Html.ValidationMessageFor(model => model.id_TipoDespacho, "", new { @class = "text-danger" })
             </div>
             <br />
+             
 
             <div class="input-group">
                 <span class="input-group-addon">Costo despacho</span>
-                <input type="text" class="form-control" name="costedespacho" placeholder="Destino" required>
+                <input type="number" class="form-control" id="costo" name="costedespacho" placeholder="Costo del despacho en NETO" required>
             </div>
             <br />
         </div>
@@ -128,3 +130,46 @@
 
 </div>
 
+<script>
+     $(document).ready(function () {
+         $("select[name=id_Trasladodespacho]").change(function () {
+             var despacho = $('select[name=id_Trasladodespacho]').val();
+             if (despacho == 2) {
+                 $('input[name=costedespacho]').val("6723");
+                 $('#costo').prop('readonly', true);
+             }
+             else
+                 if (despacho == 3) {
+                     $('input[name=costedespacho]').val("4202");
+                     $('#costo').prop('readonly', true);
+                 }
+                 else
+                     if (despacho == 1) {
+                         $('#costo').prop('readonly', false);
+                         $('input[name=costedespacho]').val("");
+                         $('#costo').attr('placeholder', 'Debe ingresar el costo del despacho por Chilexpress/Correos en NETO');
+                     }
+ 
+         });
+     });
+ </script>
+
+<script>
+    $(document).ready(function ()
+    {
+        $("#FechaEntrega").change(function ()
+        {
+            if ($("#FechaSolicitud").val() != "")
+            {
+                var fechae = $("#FechaEntrega").val();
+                var fechas = $("#FechaSolicitud").val();
+                if (Date.parse(fechas) > Date.parse(fechae))
+                {
+                    alert("La fecha de solicitud no puede ser superior a la de entrega");
+                    $("#FechaSolicitud").val("");
+                    $("#FechaEntrega").val("");
+                }
+            }
+        })
+    });
+</script>
